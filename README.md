@@ -6,6 +6,8 @@
 
 ## General Info
 This browser based web application to ...
+
+* Hi my name is Lisa Zhu. I'm excited about this project because it is my first project.
 * Heyo, Matthew here
 * Matthew again
 	
