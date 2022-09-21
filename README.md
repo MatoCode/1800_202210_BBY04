@@ -10,7 +10,8 @@ This browser based web application to ...
 * Hi my name is Lisa Zhu. I'm excited about this project because it is my first project.
 * Heyo, Matthew here
 * Hi, my name is Nelson. I'm excited to make a great web application!
-*I'm adding another line to test conflict	
+*I'm adding another line to test conflict...	
+
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
