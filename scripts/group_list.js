@@ -1,6 +1,8 @@
 var group1 = ["group 1", "index.html", "login.html"];
 var group2 = ["group 2", "login.html", "index.html"];
-var tempGroupData = [group1, group2];
+var group3 = ["group 3", "placeholder", "placeholder"];
+var group4 = ["group 4", "placeholder", "placeholder"];
+var tempGroupData = [group1, group2, group3, group4];
 
 function loadGroups(){
 
@@ -19,6 +21,7 @@ function loadGroups(){
         var calendar_button = document.createElement("button");
         calendar_button.setAttribute("class", "list-group-item list-group-item-action list-group-item-primary");
         calendar_button.setAttribute("type", "button");
+        calendar_button.setAttribute("onclick", "location.href = '" + tempGroupData[i][1] + "'");
         calendar_button.appendChild(document.createTextNode("Calendar"));
         
         var messages_button = document.createElement("button");
