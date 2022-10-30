@@ -17,92 +17,41 @@
   <nav id="navbarTemplate"></nav>
 
   <div id="daily_container">
-    <table>
-      <tr>
-        <td>Sun.</td>
-        <td>Mon.</td>
-        <td>Tues.</td>
-        <td>Wed.</td>
-        <td>Thur.</td>
-        <td>Fri.</td>
-        <td>Sat.</td>
-      </tr>
-      <tr>
-        <td><button onclick="show0()"><a><span id="date0-goes-here"></span></button></td>
-        <td><button onclick="show1()"><a><span id="date1-goes-here"></span></button></td>
-        <td><button onclick="show2()"><a><span id="date2-goes-here"></span></button></td>
-        <td><button onclick="show3()"><a><span id="date3-goes-here"></span></button></td>
-        <td><button onclick="show4()"><a><span id="date4-goes-here"></span></button></td>
-        <td><button onclick="show5()"><a><span id="date5-goes-here"></span></button></td>
-        <td><button onclick="show6()"><a><span id="date6-goes-here"></span></button></td>
-      </tr>
-    </table>  
-    <hr>
-    <div class="day_schedule">
-      <p class="hour_line_odd">12:00am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <!--<button class="hour_button" type="button"><span id="schedule-goes-here"></span></button>-->
-          <button class="hour_button" type="button">make a schedule</button>
-        </a>
-      </p>
-      <p class="hour_line_even">00:30am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <button class="hour_button" type="button">make a schedule</button>
-        </a>
-      </p>
-
-      <script src="daily_schedule_edit.js"></script>
-
-
-      <p class="hour_line_odd">01:00am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <button class="hour_button" type="button">make a schedule</button>
-        </a>
-      </p>
-      <p class="hour_line_even">01:30am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <button class="hour_button" type="button">make a schedule</button>
-        </a>
-      </p>
+    <div id="day_container">
+      <br><br>
+      <table>
+        <tr>
+          <td>Sun.</td>
+          <td>Mon.</td>
+          <td>Tues.</td>
+          <td>Wed.</td>
+          <td>Thur.</td>
+          <td>Fri.</td>
+          <td>Sat.</td>
+        </tr>
+        <tr>
+          <td><button onclick="show0()"><a><span id="date0-goes-here"></span></button></td>
+          <td><button onclick="show1()"><a><span id="date1-goes-here"></span></button></td>
+          <td><button onclick="show2()"><a><span id="date2-goes-here"></span></button></td>
+          <td><button onclick="show3()"><a><span id="date3-goes-here"></span></button></td>
+          <td><button onclick="show4()"><a><span id="date4-goes-here"></span></button></td>
+          <td><button onclick="show5()"><a><span id="date5-goes-here"></span></button></td>
+          <td><button onclick="show6()"><a><span id="date6-goes-here"></span></button></td>
+        </tr>
+      </table>
+      <br>
+      <hr>
     </div>
 
+    <div id="timeline"> </div>
+    <div id="schedule_container"> </div>
+    <div id="schedule_table">
+      <table id="schedule_tableid">
+        <tbody id="schedule_table_body">
 
-    <div class="day_schedule">
-      <p class="hour_line_odd">12:00am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <!--<button class="hour_button" type="button"><span id="schedule-goes-here"></span></button>-->
-          <button class="hour_button" type="button">this a schedule</button>
-        </a>
-      </p>
-      <p class="hour_line_even">00:30am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <button class="hour_button" type="button">this a schedule</button>
-        </a>
-      </p>
-
-      <script src="daily_schedule_edit.js"></script>
-
-
-      <p class="hour_line_odd">01:00am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <button class="hour_button" type="button">make a schedule</button>
-        </a>
-      </p>
-      <p class="hour_line_even">01:30am
-        <a href="daily_schedule_edit.html" target="popup"
-          onclick="window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;">
-          <button class="hour_button" type="button">make a schedule</button>
-        </a>
-      </p>
+        </tbody>
+      </table>
     </div>
-
   </div>
   <nav id="footerTemplate"></nav>
   <script src="./scripts/daily_schedule_page.js"></script>

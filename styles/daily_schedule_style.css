@@ -1,37 +1,60 @@
+#daily_container {
+  display: grid;
+  grid-template-columns: 20% 70% 10%;
+  grid-template-rows: 20% 80%;
+
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  background-color: white;
+  height: 100vh;
+  width: 100%;
+  gap: 0px;
+  padding-top: 75px;
+}
+
+#day_container {
+  grid-area: 1 / 2 / span 1 / span 1;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+#schedule_table {
+  grid-area: 2 / 2 / span 1 / span 3;
+}
+
+
 .hour_button {
-  /*border-color: transparent;
-  background-color: white;*/
-  border:none;
+  border: none;
   background-color: white;
   width: 60vw;
 }
+
 .hour_button:hover {
   background-color: whitesmoke;
 }
-a{
+
+a {
   text-decoration: underline;
 }
-.hour_line_even,.hour_line_odd{
-  padding:0;
-  margin:0;
-  border:#ccc;
+
+.hour_line_even,
+.hour_line_odd {
+  padding: 0;
+  margin: 0;
+  border: #ccc;
   border-style: solid #eee thin;
 }
-.hour_line_even{
+
+.hour_line_even {
   color: #ccc;
 }
 
-#daily_container {
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-    flex-direction: column;
-    min-height: 60vh;
-    padding-top: 75px;
-    font-family: -system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-  table{
-    width: 900px;
-    text-align: "center";
-  }
- 
+table {
+  width: 100%;
+  text-align: "center";
+}
+
+/* #footerTemplate {
+  position:fixed;
+} */

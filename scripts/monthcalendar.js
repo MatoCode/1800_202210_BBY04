@@ -106,7 +106,10 @@ function showCalendar(month, year) {
                 cell.setAttribute("data-month", month + 1);
                 cell.setAttribute("data-year", year);
                 cell.setAttribute("data-month_name", months[month]);
-                cell.addEventListener("click", () => {});
+                // cell.addEventListener("click", () => {});
+                cell.addEventListener("click", function creat() {
+                    window.location= 'daily_schedule_page.html';
+                }, false);
                 cell.className = "date-picker";
                 cell.innerHTML = "<span>" + date + "</span>";
 
