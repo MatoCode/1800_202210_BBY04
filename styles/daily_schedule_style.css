@@ -34,11 +34,7 @@
   background-color: whitesmoke;
 }
 
-a {
-  text-decoration: underline;
-}
 
-.hour_line_even,
 .hour_line_odd {
   padding: 0;
   margin: 0;
@@ -46,15 +42,21 @@ a {
   border-style: solid #eee thin;
 }
 
-.hour_line_even {
-  color: #ccc;
-}
-
 table {
   width: 100%;
   text-align: "center";
 }
 
+.time_list {
+  width:30px;
+}
+.time_for_pick:hover{
+  background-color: whitesmoke;
+}
+
+.time_for_pick{
+  text-align: center;
+}
 /* #footerTemplate {
   position:fixed;
 } */

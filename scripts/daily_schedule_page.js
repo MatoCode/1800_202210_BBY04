@@ -1,4 +1,4 @@
-
+document.getElementsByClassName("day_schedule")[1].style.display = "none";
 function show0() {
     document.getElementsByClassName("day_schedule")[0].style.display = "block";
     document.getElementsByClassName("day_schedule")[1].style.display = "none";
@@ -9,25 +9,33 @@ function show1() {
 }
 
 
-let button_init = "<a onclick=\"window.open('daily_schedule_edit.html','popup','width=600,height=600'); return false;\">"
-    + "<button class=\"hour_button\" type=\"button\">make a schedule</button> </a>";
-let str = "<tr><td><p class=\"hour_line_odd\">" + 12 + ":00 am" + "</p></td>" + "<td>" + button_init + "</td></tr>";
-for (let i = 1; i < 12; i++) {
-    str += "<tr><td><p class=\"hour_line_odd\">" + i + ":00 am" + "</p></td>" + "<td>" + button_init + "</td></tr>";
-}
-str += "<tr><td><p class=\"hour_line_odd\">" + "12:00 pm" + "</p></td>" + "<td>" + button_init + "</td></tr>";
-for (let i = 1; i < 12; i++) {
-    str += "<tr><td><p class=\"hour_line_odd\">" + i + ":00 pm" + "</p></td>" + "<td>" + button_init + "</td></tr>";
+let str = "";
+for (let i = 0; i < 24; i++) {
+    str += "<tr><td><p class=\"hour_line_odd\">" + i + ":00" + "</p></td>" + "<td>" + "\
+    <button class=\"hour_button\" type=\"button\" id=\"button" + i + "\" onclick=\"changeSchedule(id)\">make a schedule</button>" + "</td></tr>";
 }
 document.querySelector('#schedule_table_body').innerHTML = str;
-
+let str_day1 = "";
+for (let i = 0; i < 24; i++) {
+    str_day1 += "<tr><td><p class=\"hour_line_odd\">" + i + ":00" + "</p></td>" + "<td>" + "\
+    <button class=\"hour_button\" type=\"button\" id=\"button" + i + "_day1\" onclick=\"changeSchedule(id)\">make a schedule</button>" + "</td></tr>";
+}
+document.querySelector('#schedule_table_body_day1').innerHTML = str;
+function changeSchedule(button_id){
+    element=document.getElementById(button_id);
+    element.style.backgroundColor = "lightblue";  
+    element.innerText = "schedule made";
+    
+    window.open('daily_schedule_edit.html','popup','width=600,height=600'); 
+}
 
 var date = new Date();
 var week = date.getDay();
-var days_in_months = 31;
-if (date.getMonth == 11) {
-    days_in_months = 30;
-}
+
+var days_in_months = 32 - new Date(date.getFullYear(), date.getMonth(), 32).getDate();;
+// if (date.getMonth == 11) {
+//     days_in_months = 30;
+// }
 
 
 $("#date0-goes-here").text((date.getDate() - week -1) % days_in_months + 1);
