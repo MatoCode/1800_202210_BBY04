@@ -1,4 +1,8 @@
-#daily_container {
+body {
+  padding: auto;
+  padding-top: 75px;
+}
+/* #daily_container {
   display: grid;
   grid-template-columns: 20% 70% 10%;
   grid-template-rows: 20% 80%;
@@ -21,13 +25,30 @@
 }
 #schedule_table {
   grid-area: 2 / 2 / span 1 / span 3;
-}
+} */
 
+
+/* #day_container {
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+} */
+/* #daily_container {
+  overflow: hidden;
+}
+#schedule_table {
+  overflow-y: scroll;
+  padding: 20px;
+ } */
+
+#daily_container {
+  padding: auto;
+}
 
 .hour_button {
   border: none;
   background-color: white;
-  width: 60vw;
+  width: 100%;
 }
 
 .hour_button:hover {
@@ -36,17 +57,20 @@
 
 
 .hour_line_odd {
-  padding: 0;
-  margin: 0;
+  padding: auto;
+  margin: auto;
   border: #ccc;
   border-style: solid #eee thin;
 }
 
 table {
   width: 100%;
-  text-align: "center";
+  text-align: center;
 }
 
+#schedule_tableid {
+  text-align: center;
+}
 .time_list {
   width:30px;
 }
