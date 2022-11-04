@@ -1,6 +1,8 @@
 var messages = document.getElementById("messages")
-var messages = document.getElementById("textbox")
-var messages = document.getElementById("button")
+var textbox = document.getElementById("textbox")
+var button = document.getElementById("button")
+
+
 
 button.addEventListener("click", function() {
     var newMessage = document.createElement("ul")
