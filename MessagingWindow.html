@@ -21,6 +21,8 @@
     <!-------------------------------------------------------->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script> 
+    <!--includes database-->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>  
@@ -36,18 +38,18 @@
 
 
 
-        <div id = 'ChatWindow'>
-            <form onsubmit="return sendMessage();">
-                <input id="message" placeholder="Enter message" autocomplete="off">
-             
-                <input type="submit">
-            </form>
-            <ul id="messages"></ul>
-        </div>
+
+        <ul id="messages"></ul>   
+        <input id="textbox" placeholder="Enter message" type = "text" >
+        <button id="button">Send</button>
+
+            
+
 
 
         <!-- scripts -->
         <script src="./scripts/skeleton.js"></script>
         <script src="./scripts/messaging.js"></script>
+        <script src="./scripts/firebaseAPI_TeamBBY04.js"></script>
     </body>
 </html>
