@@ -27,7 +27,7 @@ function insertEvent() {
             timeslot: timeslot_selected
         });
         console.log("New calendar added to firestore");
-        // window.close();
+        window.close();
     } else {
         // No user is signed in.
     }
