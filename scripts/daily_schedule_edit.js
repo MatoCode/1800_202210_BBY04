@@ -20,14 +20,20 @@ function insertEvent() {
         }
 
         //write event information to firestore users/calendar collection
-        calendarId = cellid + timeslot_selected;
+        data_selected = document.getElementById('event_date').value;
+        calendarId = data_selected + timeslot_selected;
         db.collection("users").doc(user.uid).collection("calendar").doc(calendarId).set({         //write to firestore. We are using the UID for the ID in users collection
             title: document.getElementById('event_title').value,
-            date: document.getElementById('event_date').value,
+            date: data_selected,
             timeslot: timeslot_selected
+        }).then(function() {
+            console.log("New calendar added to firestore");
+            window.close();
+        }).catch(function (error) {
+            console.log("Error adding new event: " + error);
         });
-        console.log("New calendar added to firestore");
-        window.close();
+
+
     } else {
         // No user is signed in.
     }
