@@ -24,8 +24,41 @@
         </ul>
         
       </div>
-      <ul class="navbar-nav ml-auto">
-        <button>share</button>
-      </ul>
+      
+      <div class="nav navbar-nav ml-auto">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="join-group-dropdown-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Join Group 
+          </button>
+          <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="join-group-dropdown-button">
+            <form class="px-4 py-3">
+              <div class="mb-3">
+                <label for="group-code-dropdown-form" class="form-label">Group Code</label>
+                <input type="text" class="form-control" id="group-code-dropdown-form" placeholder="code">
+              </div>
+              <button type="submit" class="btn btn-primary">Join</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="join-group-dropdown-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Create Group 
+          </button>
+          <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="join-group-dropdown-button">
+            <form class="px-4 py-3">
+              <div class="mb-3">
+                <label for="group-name-dropdown-form" class="form-label">Group Name</label>
+                <input type="text" class="form-control" id="group-name-dropdown-form" placeholder="name" required="required" pattern="(?=.*[a-zA-Z0-9]).{3,}">
+              </div>
+              <button class="btn btn-primary" id="group-create-submit-button">Create</button>
+            </form>
+          </div>
+        </div> -->
+      </div>
+      
     </div>
   </nav>
+
+
+  

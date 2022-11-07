@@ -13,7 +13,7 @@ var group12 = ["group 2", "login.html", "index.html"];
 var group13 = ["group 3", "placeholder", "placeholder"];
 var group14 = ["group 4", "placeholder", "placeholder"];
 var group15 = ["group 5", "placeholder", "placeholder"];
-var tempGroupData = [group1, group2, group3, group4, group5, group6, group7, group8, group9, group10, group11, group12, group13, group14, group15];
+var tempGroupData = [group1, group2, group3, group4];
 
 function loadGroups(){
 
