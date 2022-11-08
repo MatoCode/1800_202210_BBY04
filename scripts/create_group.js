@@ -24,8 +24,8 @@ function createGroup() {
     user = firebase.auth().currentUser;
     
     const groupsRef = db.collection('groups');
-    var userID = user.uid;
-    var groupName = document.getElementById("group-name-dropdown-form").value;
+    let userID = user.uid;
+    let groupName = document.getElementById("group-name-dropdown-form").value;
     console.log(groupName);
 
     const ref = db.collection("groups").doc();
@@ -38,6 +38,27 @@ function createGroup() {
     db.collection("users").doc(userID).update({
         groups: firebase.firestore.FieldValue.arrayUnion(ref.id)
     });
-    
+
+    const groupSuccessAlert = document.getElementById('group-create-success-alert')
+
+    const alert = (message, type) => {
+      const wrapper = document.createElement('div')
+      wrapper.innerHTML = [
+        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+        `   <div>${message}</div>`,
+        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+        '</div>'
+      ].join('')
+
+      groupSuccessAlert.append(wrapper)
+    }
+
+    alert('Group Created!', 'success')
+
+    document.getElementById("group-name-dropdown-form").value = "";
 }
+
+
+
+
 

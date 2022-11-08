@@ -45,23 +45,25 @@
           <button class="btn btn-secondary dropdown-toggle" type="button" id="join-group-dropdown-button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
             Create Group 
           </button>
-          <div class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="join-group-dropdown-button">
-            <form class="px-4 py-3" onsubmit="return false">
+          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="join-group-dropdown-button" >
+            <form class="px-4 py-2" onsubmit="return false">
               <div class="mb-3">
                 <label for="group-name-dropdown-form" class="form-label">Group Name</label>
                 <input type="text" class="form-control" id="group-name-dropdown-form" placeholder="name" required="required" pattern="(?=.*[a-zA-Z0-9]).{3,}">
               </div>
               <button type="submit" class="btn btn-primary" id="group-create-submit-button" onclick="groupCreation()">Create</button>
-              <div class="alert alert-success d-flex align-items-center" role="alert" id="group-create-success-alert">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-                <div>
-                  An example success alert with an icon
-                </div>
-              </div>              
+              <div><hr class="dropdown-divider"></div>
+              <div id="group-create-success-alert"></div>
             </form>
           </div>
+        </div>
       </div>
-      </div>
+
+      <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </symbol>
+      </svg>
       
     </div>
   </nav>
