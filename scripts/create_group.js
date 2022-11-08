@@ -58,6 +58,12 @@ function createGroup() {
     document.getElementById("group-name-dropdown-form").value = "";
 }
 
+function groupJoin() {
+    let code = document.getElementById("group-code-dropdown-form").value;
+    console.log("join button pressed");
+    console.log(code);
+}
+
 
 
 
