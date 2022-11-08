@@ -1,11 +1,16 @@
-document.querySelector("#group-create-submit-button").addEventListener("click", function() { 
+// document.querySelector("#group-create-submit-button").addEventListener("click", function() { 
 
-if (validateName()) {
-    createGroup();
+// if (validateName()) {
+//     createGroup();
+// }
+
+// }, false);
+
+function groupCreation() {
+    if (validateName()) {
+        createGroup();
+    }
 }
-
-
-}, false);
 
 function validateName() {
     var testName = document.getElementById("group-name-dropdown-form").value;
@@ -33,5 +38,6 @@ function createGroup() {
     db.collection("users").doc(userID).update({
         groups: firebase.firestore.FieldValue.arrayUnion(ref.id)
     });
+    
 }
 
