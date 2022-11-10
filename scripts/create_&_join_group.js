@@ -72,9 +72,21 @@ function groupJoin() {
     // since the code has been cleared
 }
 
+function createCode() {
+    var minNum = 10000;
+    var maxnum = 99999;
+    let newCode = Math.floor(Math.random() * (maxnum - minNum + 1)) + minNum;
+    console.log(newCode);
+    db.collection("groups").doc(currGroup).update({
+        codes: firebase.firestore.FieldValue.arrayUnion(newCode)
+    });
+}
+
 function clearCodes() {
 
 }
+
+
 
 
 

@@ -7,3 +7,7 @@ function loadSkeleton(){
     console.log($('#footerTemplate').load('./text/footer.html'));
 }
 loadSkeleton();  //invoke the function
+
+function printGroup() {
+    console.log(currGroup);
+}
