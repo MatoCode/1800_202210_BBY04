@@ -5,6 +5,7 @@
 // }
 
 // }, false);
+var currGroup;
 
 function groupCreation() {
     if (validateName()) {
@@ -39,6 +40,8 @@ function createGroup() {
         groups: firebase.firestore.FieldValue.arrayUnion(ref.id)
     });
 
+    currGroup = ref.id;
+
     const groupSuccessAlert = document.getElementById('group-create-success-alert')
 
     const alert = (message, type) => {
@@ -58,10 +61,19 @@ function createGroup() {
     document.getElementById("group-name-dropdown-form").value = "";
 }
 
-function groupJoin() {
+function groupJoin() { 
     let code = document.getElementById("group-code-dropdown-form").value;
     console.log("join button pressed");
     console.log(code);
+    // idea: use window.setTimeout(function, milliseconds) to delay a "clear codes" method
+    // after a user in a group creates a group code to pass to user looking
+    // to join the group. the Code will exist in the group until the time passes
+    // and if the joining user enters the code before the delay, they get in, if not, they don't 
+    // since the code has been cleared
+}
+
+function clearCodes() {
+
 }
 
 
