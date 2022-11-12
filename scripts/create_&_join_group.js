@@ -63,7 +63,7 @@ function createGroup() {
     //Nelson's addition of code to add group name to side bar-(ADD THIS CODE TO JOIN GROUP WHEN------------------------------
     var groupSideList = document.getElementById("groupSideList")
     var newGroupName = document.createElement("a")
-    newGroupName.setAttribute("href", "Group_mes_cal_page.html")                  //Need to change the html to a unique html with unique ID
+    newGroupName.setAttribute("href", "Group_mes_cal_page.html")                  //Need to change the html to a unique html with unique ID 
     newGroupName.innerHTML = document.getElementById("group-name-dropdown-form").value
     console.log(newGroupName);
     groupSideList.appendChild(newGroupName);
