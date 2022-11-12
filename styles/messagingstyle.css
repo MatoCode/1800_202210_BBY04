@@ -5,7 +5,15 @@ body {
   background-color: rgb(253, 215, 0);
 }
 
-#messages {
-    padding-top: 100px;
-    background-color: rgb(236, 82, 22);
+#messaging {
+  display: grid;
+  margin: 0 auto;
+  padding-top: 10px;
+  background-color: rgb(236, 82, 22);
+  grid-template-columns: 35vw 20vw 10vw 30vw;
+  grid-template-rows: 5vh 50vh;
+}
+#textbox {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
 }

@@ -23,6 +23,17 @@ button.addEventListener("click", function() {
         console.log("Error adding new event: " + error);
     });
 
+    //Store username
+    db.collection("groups").doc(currGroup).collection("messaging").doc(messageId).set({         
+        message: document.getElementById('textbox').value,
+        username: user.displayName
+    }).then(function() {
+        console.log("New message added to firestore");
+        window.close();
+    }).catch(function (error) {
+        console.log("Error adding new event: " + error);
+    });
+
     //displays user name and appends to text
     const textnode = document.createTextNode(user.displayName);
     messages.appendChild(newMessage);
