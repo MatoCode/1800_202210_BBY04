@@ -37,8 +37,8 @@ button.addEventListener("click", function() {
     console.log(newMessage)
     //displays user name and appends to text
     const textnode = document.createTextNode(user.displayName);
-    messages.appendChild(newMessage);
     messages.appendChild(textnode);
+    messages.appendChild(newMessage);
     textbox.value = "";
 });
 

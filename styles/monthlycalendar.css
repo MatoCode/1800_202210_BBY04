@@ -1,42 +1,65 @@
+@import url(https://fonts.googleapis.com/css?family=Noto+Nastaliq+Urdu);
+
 body {
+    background-image: url("/images/try.jpg");
+
+}
+
+#mainPage {
     display: grid;
     margin: 0 auto;
-    background-color: rgb(253, 215, 0);
-    grid-template-columns: 7vw 87vw;   
+    /**background-color: rgb(253, 215, 0);*/
+    grid-template-columns: 7vw 87vw;
+    grid-template-rows: 7vh 45vh;   
   }
 
   #sidebar{
     grid-column: 1 / span 1;
     grid-row: 1 / span 10;
-    background-color: rgb(156, 156, 156);
+    /*background-color: rgb(226, 75, 15);*/
+    background-image: url("/images/try2.jpg");
   }
   #groupSideList{
     padding-top: 100px;
     word-wrap: break-word;
     overflow-y: auto;
+    font-family:'Noto+Nastaliq+Urdu';
+    text-align: center;
   }
+  #groupSideList p{
+    font-size: 20px;
+  }
+
+#groupSideList a{
+  font-size: 20px;
+  color: white;
+}
   
   #messaging {
     display: grid;
     margin: 0 auto;
     padding-top: 10px;
-    background-color: rgb(236, 82, 22);
-    grid-template-columns: 35vw 20vw 10vw 30vw;
-    grid-template-rows: 5vh 35vh;
+    /**background-color:rgb(253, 215, 0);*/
+    grid-template-columns: 29vw 20vw 10vw 30vw;
+    grid-template-rows: 45vh 5vh;
   }
   #textbox {
     grid-column: 2 / span 1;
-    grid-row: 1 / span 1;
+    grid-row: 2 / span 1;
+    
   }
   #button {
     grid-column: 3 / span 1;
-    grid-row: 1 / span 1;
+    grid-row: 2 / span 1;
   }
   #messages{
     grid-column: 2 / span 2;
-    grid-row: 2 / span 1;
+    grid-row: 1 / span 1;
     word-wrap: break-word;
     overflow-y: auto;
+    background-color: white;
+    border-color: #0f1111;
+    border-style: inset;
   }
 
 .wrapper {
@@ -47,10 +70,10 @@ body {
 .container-calendar {
     background: rgb(255, 255, 253);
     padding: 15px;
-    padding-top: 100px;
     max-width: 475px;
     margin: 0 auto;
     overflow: auto;
+    border-radius: 20px;
 }
 
 .button-container-calendar button {
