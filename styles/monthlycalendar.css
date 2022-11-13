@@ -94,3 +94,53 @@
     border-radius: 3px;
     padding: 5px 1em;
 }
+
+.ameventdisplay{
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1;
+    /* background: lightpink; */
+    color: #1b1717;
+    background: white;
+    border:none;
+    /* border: 1px solid #bfc5c5;*/
+    border-radius: 3px; 
+    /* padding: 5px 1em; */
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+    height: 20px;
+    width: 50px;
+}
+.pmeventdisplay{
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1;
+    height: 20px;
+    width: 50px;
+    background: white;
+    /* background: lightskyblue; */
+    color: #1b1717;
+    border: none;
+    /* 1px solid #bfc5c5; */
+    border-radius: 3px;
+    /* padding: 5px 1em; */
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+}
+.eveeventdisplay{
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1;
+    background: white;
+    border:none;
+    /* background: lightseagreen; */
+    color: #1b1717;
+    /* border: 1px solid #bfc5c5;*/
+    border-radius: 3px; 
+    /* padding: 5px 1em; */
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+}
