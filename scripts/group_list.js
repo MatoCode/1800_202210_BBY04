@@ -49,3 +49,21 @@ function loadGroups(){
     dest.appendChild(list);
 }
 loadGroups();
+
+
+function makeGroupList() {
+    user = firebase.auth().currentUser;
+    db.collection("users").doc(user.uid).get().then(function(userDoc) {
+        userDoc.data().groups.forEach((element) => {
+            var newGroupButton = document.createElement("button");
+            
+            newGroupButton.setAttribute("onclick", setCurrGroup(groupName));
+        });
+    });
+
+}
+
+function setCurrGroup(name){
+    console.log("placeholder");
+    console.log(name);
+}

@@ -141,18 +141,16 @@ function devToolSetCurrGroup(groupName) {
         if (!obtained.empty) {
             currGroup = obtained.docs[0].ref;
             
-            currGroup.get().then(obt => {
+            currGroup.get().then(function(obt) {
                 console.log("devtool " + obt.data().name);
+                console.log("devtool " + obt.data().members[0]);
+
             });
             console.log("devtool " + currGroup.id);
         } else {
             console.log("empty return");
         }
         
-        // obtained.forEach(doc => {
-        //     console.log(doc.data().name);
-        // });
-        // currently this does not set the currGroup the same as the create group function. need to discuss if this method is better or not.
     });
 }
 
