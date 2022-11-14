@@ -12,7 +12,7 @@ button.addEventListener("click", function() {
     user = firebase.auth().currentUser;
 
     newMessage.innerHTML = textbox.value;
-
+ 
     messageId = textbox.value;
     db.collection("groups").doc(user.uid).collection("messaging").doc(messageId).set({         //what is uid fro groups???
         message: document.getElementById('textbox').value,
@@ -23,10 +23,22 @@ button.addEventListener("click", function() {
         console.log("Error adding new event: " + error);
     });
 
+    //Store username
+    db.collection("groups").doc(user.uid).collection("messaging").doc(messageId).set({         
+        message: document.getElementById('textbox').value,
+        username: user.displayName
+    }).then(function() {
+        console.log("New message added to firestore");
+        window.close();
+    }).catch(function (error) {
+        console.log("Error adding new event: " + error);
+    });
+
+    console.log(newMessage)
     //displays user name and appends to text
     const textnode = document.createTextNode(user.displayName);
-    messages.appendChild(newMessage);
     messages.appendChild(textnode);
+    messages.appendChild(newMessage);
     textbox.value = "";
 });
 
