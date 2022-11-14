@@ -14,7 +14,7 @@ button.addEventListener("click", function() {
     newMessage.innerHTML = textbox.value;
  
     messageId = textbox.value;
-    db.collection("groups").doc(user.uid).collection("messaging").doc(messageId).set({         //what is uid fro groups???
+    db.collection("groups").doc(currGroup.id).collection("messaging").doc(messageId).set({         //what is uid fro groups???
         message: document.getElementById('textbox').value,
     }).then(function() {
         console.log("New message added to firestore");
@@ -24,7 +24,7 @@ button.addEventListener("click", function() {
     });
 
     //Store username
-    db.collection("groups").doc(user.uid).collection("messaging").doc(messageId).set({         
+    db.collection("groups").doc(user.uid).collection("messaging").doc(messageId).set({          
         message: document.getElementById('textbox').value,
         username: user.displayName
     }).then(function() {
