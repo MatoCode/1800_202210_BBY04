@@ -41,7 +41,7 @@ function createGroup() {
         groups: firebase.firestore.FieldValue.arrayUnion(ref.id)
     });
 
-    currGroup = ref.id;
+    currGroup = ref;
 
     const groupSuccessAlert = document.getElementById('group-create-success-alert')
 
@@ -87,11 +87,12 @@ function groupJoin() {
     // since the code has been cleared
 }
 
-function devToolJoinGroup(groupName) {
+function devToolSetCurrGroup(groupName) {
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
             currGroup = obtained.docs[0];
-            console.log(currGroup.data().name);
+            console.log("devtool " + currGroup.data().name);
+            console.log("devtool " + currGroup.id);
         } else {
             console.log("empty return");
         }
@@ -121,7 +122,7 @@ function clearCodes() {
 
 function displayCurrGroup() {
     if (typeof(currGroup) != "undefined") {
-        console.log(currGroup.data().name());
+        console.log(currGroup.data().name);
     } else {
         console.log("currGroup undefined");
     }
