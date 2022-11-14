@@ -21,7 +21,6 @@ function validateName() {
 }
 
 function createGroup() {
-    const db = firebase.firestore();
     user = firebase.auth().currentUser;
     
     const groupsRef = db.collection('groups');
@@ -38,14 +37,14 @@ function createGroup() {
     });
 
     db.collection("users").doc(userID).update({
-        groups: firebase.firestore.FieldValue.arrayUnion(ref.id)
+        groups: firebase.firestore.FieldValue.arrayUnion(ref)
     });
 
     currGroup = ref;
 
-    const groupSuccessAlert = document.getElementById('group-create-success-alert')
+    const groupCreateSuccessAlert = document.getElementById('group-create-success-alert');
 
-    const alert = (message, type) => {
+    const createAlert = (message, type) => {
       const wrapper = document.createElement('div')
       wrapper.innerHTML = [
         `<div class="alert alert-${type} alert-dismissible" role="alert">`,
@@ -54,10 +53,11 @@ function createGroup() {
         '</div>'
       ].join('')
 
-      groupSuccessAlert.append(wrapper)
+      groupCreateSuccessAlert.append(wrapper)
+
     }
 
-    alert('Group Created!', 'success')
+    createAlert('Group Created!', 'success')
 
 
     //Nelson's addition of code to add group name to side bar-(ADD THIS CODE TO JOIN GROUP WHEN------------------------------
@@ -74,12 +74,56 @@ function createGroup() {
 }
 
 function groupJoin() { 
-    let code = document.getElementById("group-code-dropdown-form").value;
+    let name = document.getElementById("group-Name-dropdown-form").value;
+    user = firebase.auth().currentUser;
+    userID = user.uid;
 
-    
+    db.collection("groups").limit(1).where("name", "==", name).get().then(obtained => {
+        if (!obtained.empty) {
+            currGroup = obtained.docs[0].ref;
+            currGroup.update({
+                members: firebase.firestore.FieldValue.arrayUnion(user.uid)
+            });
+
+            db.collection("users").doc(userID).update({
+                groups: firebase.firestore.FieldValue.arrayUnion(currGroup)
+            });
+
+            const groupJoinSuccessAlert = document.getElementById('group-join-success-alert')
+
+
+            const joinAlert = (message, type) => {
+                const wrapper = document.createElement('div')
+                wrapper.innerHTML = [
+                  `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                  `   <div>${message}</div>`,
+                  '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                  '</div>'
+                ].join('')
+          
+                groupJoinSuccessAlert.append(wrapper)
+            }
+
+            joinAlert('Group joined', 'success');
+
+
+            currGroup.get().then(group => {
+                console.log("devtool " + group.data().name);
+            });
+
+            console.log("devtool " + currGroup.id);
+        } else {
+            console.log("empty return");
+        }
+
+        
+        // obtained.forEach(doc => {
+        //     console.log(doc.data().name);
+        // });
+        // currently this does not set the currGroup the same as the create group function. need to discuss if this method is better or not.
+    });
 
     console.log("join button pressed");
-    console.log(code);
     // idea: use window.setTimeout(function, milliseconds) to delay a "clear codes" method
     // after a user in a group creates a group code to pass to user looking
     // to join the group. the Code will exist in the group until the time passes
@@ -90,8 +134,11 @@ function groupJoin() {
 function devToolSetCurrGroup(groupName) {
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
-            currGroup = obtained.docs[0];
-            console.log("devtool " + currGroup.data().name);
+            currGroup = obtained.docs[0].ref;
+            
+            currGroup.get().then(obt => {
+                console.log("devtool " + obt.data().name);
+            });
             console.log("devtool " + currGroup.id);
         } else {
             console.log("empty return");
