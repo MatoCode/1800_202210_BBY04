@@ -75,6 +75,9 @@ function createGroup() {
 
 function groupJoin() { 
     let code = document.getElementById("group-code-dropdown-form").value;
+
+    
+
     console.log("join button pressed");
     console.log(code);
     // idea: use window.setTimeout(function, milliseconds) to delay a "clear codes" method
@@ -82,6 +85,22 @@ function groupJoin() {
     // to join the group. the Code will exist in the group until the time passes
     // and if the joining user enters the code before the delay, they get in, if not, they don't 
     // since the code has been cleared
+}
+
+function devToolJoinGroup(groupName) {
+    db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
+        if (!obtained.empty) {
+            currGroup = obtained.docs[0];
+            console.log(currGroup.data().name);
+        } else {
+            console.log("empty return");
+        }
+        
+        // obtained.forEach(doc => {
+        //     console.log(doc.data().name);
+        // });
+        // currently this does not set the currGroup the same as the create group function. need to discuss if this method is better or not.
+    });
 }
 
 function createCode() {
@@ -95,7 +114,18 @@ function createCode() {
 }
 
 function clearCodes() {
+    currGroup.update({
+        codes: deleteField()
+    });
+}
 
+function displayCurrGroup() {
+    if (typeof(currGroup) != "undefined") {
+        console.log(currGroup.data().name());
+    } else {
+        console.log("currGroup undefined");
+    }
+    
 }
 
 
