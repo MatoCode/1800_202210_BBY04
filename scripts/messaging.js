@@ -24,7 +24,7 @@ button.addEventListener("click", function() {
     });
 
     //Store username
-    db.collection("groups").doc(user.uid).collection("messaging").doc(messageId).set({          
+    db.collection("groups").doc(currGroup.uid).collection("messaging").doc(messageId).set({          
         message: document.getElementById('textbox').value,
         username: user.displayName
     }).then(function() {
