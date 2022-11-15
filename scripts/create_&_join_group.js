@@ -179,9 +179,10 @@ function displayCurrGroup() {
     
 }
 
-
-
-
+function devToolDisplayCurrUser() {
+    user = firebase.auth().currentUser;
+    console.log(user.uid);
+}
 
 
 
