@@ -51,19 +51,21 @@ function loadGroups(){
 loadGroups();
 
 
-function makeGroupList() {
-    user = firebase.auth().currentUser;
-    db.collection("users").doc(user.uid).get().then(function(userDoc) {
-        userDoc.data().groups.forEach((element) => {
-            var newGroupButton = document.createElement("button");
-            
-            newGroupButton.setAttribute("onclick", setCurrGroup(groupName));
-        });
-    });
+// function makeGroupList() {
+//     user = firebase.auth().currentUser;
+//     db.collection("users").doc(user.uid).get().then(function(userDoc) {
+//         userDoc.data().groups.forEach((element) => {
+//             var newGroupButton = document.createElement("button");
+//             console.log(newGroupButton)            
+//             newGroupButton.setAttribute("onclick", setCurrGroup(groupName));
+//         });
+//     });
 
-}
+// }
 
-function setCurrGroup(name){
-    console.log("placeholder");
-    console.log(name);
-}
+// function setCurrGroup(name){
+//     db.collection("groups").limit(1).where("name", "==", name).get().then(obtainGroup => {
+//         obtainGroup = db.collection("groups").doc(currGroup.id)
+//     })
+//     console.log(obtainGroup);
+// }

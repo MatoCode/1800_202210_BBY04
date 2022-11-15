@@ -61,17 +61,18 @@ function createGroup() {
 
 
     //Nelson's addition of code to add group name to side bar-(ADD THIS CODE TO JOIN GROUP WHEN------------------------------
-    var groupSideList = document.getElementById("groupSideList")
-    var newGroupName = document.createElement("button")
-    db.collection("users").doc(user.uid).groups.forEach(element => { 
-        console.log(devToolSetCurrGroup(currGroup.data().name))
-        //newGroupName.setAttribute("onclick", devToolSetCurrGroup(currGroup.data().name))     
-    });
+    // var groupSideList = document.getElementById("groupSideList")
+    // var newGroupName = document.createElement("button")
+    // //db.collection("users").doc(user.uid).groups.forEach(element => { 
+    //     //console.log(devToolSetCurrGroup(currGroup.data().name))
 
-    //newGroupName.setAttribute("href", "Group_mes_cal_page.html")                  //Need to change the html to a unique html with unique ID 
-    newGroupName.innerHTML = document.getElementById("group-name-dropdown-form").value
-    console.log(newGroupName);
-    groupSideList.appendChild(newGroupName);
+    //     //newGroupName.setAttribute("onclick", devToolSetCurrGroup(currGroup.data().name))     
+    // //});
+
+    // //newGroupName.setAttribute("href", "Group_mes_cal_page.html")                  //Need to change the html to a unique html with unique ID 
+    // newGroupName.innerHTML = document.getElementById("group-name-dropdown-form").value
+    // console.log(newGroupName);
+    // groupSideList.appendChild(newGroupName);
     //---------------------------------------------------------------------------------------
 
     document.getElementById("group-name-dropdown-form").value = "";
@@ -177,6 +178,47 @@ function displayCurrGroup() {
         console.log("currGroup undefined");
     }
     
+}
+
+
+//I need to get the group name list for line 194 and line 199 for this to work
+//Nelson's attempt at dynamically adding groups to sidebar
+function makeGroupList() {
+    user = firebase.auth().currentUser;
+    db.collection("users").doc(user.uid).get().then(function(userDoc) {
+        userDoc.data().groups.forEach((element) => {  
+            console.log("group name here" + element.get())                                //for each runs thru the number of elements(groups) that the user is a part of
+            var groupSideList = document.getElementById("groupSideList")
+            var newGroupButton = document.createElement("button");   
+            newGroupButton.innerHTML = "mytest";                  //Need a a way to get each element from the list of groups to go into inner text here instead of "mytest"
+            //console.log("testing" + newGroupButton)
+            //newGroupButton.innerHTML = document.getElementById("group-name-dropdown-form").value 
+            groupSideList.appendChild(newGroupButton);            //Adds button to the MyGroups list in the sidebar
+            console.log(newGroupButton) 
+            var nameEntered = document.getElementById("group-name-dropdown-form").value    
+            newGroupButton.setAttribute("onclick", setCurrGroup(nameEntered));
+        });
+    });
+
+}
+
+function setCurrGroup(name){
+    db.collection("groups").where("name", "==", name).get().then(obtained => {
+        if (!obtained.empty) {
+            currGroup = obtained.docs[0].ref;
+            
+            currGroup.get().then(function(obt) {
+                obt.data().name;
+            });
+        } else {
+            console.log("empty return");
+        }       
+    });
+
+    // db.collection("groups").limit(1).where("name", "==", name).get().then(obtainGroup => {
+    //     obtainGroup = db.collection("groups").doc(currGroup.id)
+    // })
+    // console.log(obtainGroup);
 }
 
 
