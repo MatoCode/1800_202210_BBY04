@@ -40,7 +40,12 @@ function createGroup() {
         groups: firebase.firestore.FieldValue.arrayUnion(ref)
     });
 
-    currGroup = ref;
+    db.collection("groups").doc(ref.id).get()
+        .then(groupRef => {
+            currGroup = groupRef;
+            console.log((typeof currGroup) );
+
+        });
 
     const groupCreateSuccessAlert = document.getElementById('group-create-success-alert');
 
@@ -58,7 +63,7 @@ function createGroup() {
     }
 
     createAlert('Group Created!', 'success')
-
+    createGroupCalendar(ref);
 
     //Nelson's addition of code to add group name to side bar-(ADD THIS CODE TO JOIN GROUP WHEN------------------------------
     // var groupSideList = document.getElementById("groupSideList")
@@ -76,7 +81,7 @@ function createGroup() {
     //---------------------------------------------------------------------------------------
 
     document.getElementById("group-name-dropdown-form").value = "";
-
+    
 }
 
 function groupJoin() { 
@@ -143,11 +148,12 @@ function devToolSetCurrGroup(groupName) {
             currGroup = obtained.docs[0].ref;
             
             currGroup.get().then(function(obt) {
-                console.log("devtool " + obt.data().name);
+                console.log("devtool set name " + obt.data().name);
                 console.log("devtool " + obt.data().members[0]);
 
             });
-            console.log("devtool " + currGroup.id);
+            console.log("devtool id " + currGroup.id);
+            console.log("devtool type " + (typeof currGroup));
         } else {
             console.log("empty return");
         }

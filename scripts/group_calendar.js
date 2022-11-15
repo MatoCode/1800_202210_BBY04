@@ -1,16 +1,24 @@
 function createGroupCalendar(groupRef) {
-   db.collection("groups").doc(groupRef).get()
+    console.log("called create group calendar");
+   groupRef.get()
         .then(function(groupDoc) {
             let memberList = groupDoc.data().members;
             memberList.forEach(member => {
-                let memberCal = db.collection("users").doc(member).collection("calendar");
-                memberCal.forEach(memEvent => {
-                    groupDoc.collection("calendar").add({
-                        title: member.name,
-                        date: memEvent.date,
-                        timeslot: memEvent.timeslot
+                db.collection("users").doc(member).get().then(user => {
+                    db.collection("users").doc(member).collection("calendar").get()
+                    .then(events => {
+                        events.forEach(event => {
+                            db.collection("groups").doc(groupDoc.id).collection("calendar").add({
+                                title: user.data().name,
+                                date: event.data().date,
+                                timeslot: event.data().timeslot
+                            });
+
+                        });
                     });
                 });
+                
+                
             });
         });
 }
