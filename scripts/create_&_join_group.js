@@ -187,14 +187,19 @@ function makeGroupList() {
     user = firebase.auth().currentUser;
     db.collection("users").doc(user.uid).get().then(function(userDoc) {
         userDoc.data().groups.forEach((element) => {  
-            console.log("group name here" + element.get())                                //for each runs thru the number of elements(groups) that the user is a part of
-            var groupSideList = document.getElementById("groupSideList")
+            //console.log("group name here" + element.get().then())                                //for each runs thru the number of elements(groups) that the user is a part of
+            var groupSideList = document.getElementById("groupSideList");
             var newGroupButton = document.createElement("button");   
-            newGroupButton.innerHTML = "mytest";                  //Need a a way to get each element from the list of groups to go into inner text here instead of "mytest"
+            element.get().then(function(obt) {
+                //obt.data().name
+                newGroupButton.innerHTML = obt.data().name; 
+                console.log(obt.data().name)
+            })
+            //newGroupButton.innerHTML = "mytest";                  //Need a a way to get each element from the list of groups to go into inner text here instead of "mytest"
             //console.log("testing" + newGroupButton)
             //newGroupButton.innerHTML = document.getElementById("group-name-dropdown-form").value 
             groupSideList.appendChild(newGroupButton);            //Adds button to the MyGroups list in the sidebar
-            console.log(newGroupButton) 
+            //console.log(newGroupButton) 
             var nameEntered = document.getElementById("group-name-dropdown-form").value    
             newGroupButton.setAttribute("onclick", setCurrGroup(nameEntered));
         });
@@ -208,7 +213,7 @@ function setCurrGroup(name){
             currGroup = obtained.docs[0].ref;
             
             currGroup.get().then(function(obt) {
-                obt.data().name;
+                obt.data().members[0]
             });
         } else {
             console.log("empty return");
@@ -224,6 +229,10 @@ function setCurrGroup(name){
 
 
 
+function devToolDisplayCurrUser() {
+    user = firebase.auth().currentUser;
+    console.log(user.uid);
+}
 
 
 
