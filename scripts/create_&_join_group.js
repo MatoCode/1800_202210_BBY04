@@ -195,23 +195,32 @@ function makeGroupList() {
         userDoc.data().groups.forEach((element) => {  
             //console.log("group name here" + element.get().then())                                //for each runs thru the number of elements(groups) that the user is a part of
             var groupSideList = document.getElementById("groupSideList");
-            var newGroupButton = document.createElement("button");   
+            var newGroupButton = document.createElement("button"); 
+            newGroupButton.setAttribute("class", "testbuttonclassname") 
             element.get().then(function(obt) {
                 //obt.data().name
+                newGroupButton.setAttribute("class", "buttonname" + obt.data().name) 
                 newGroupButton.innerHTML = obt.data().name; 
                 console.log(obt.data().name)
+                groupSideList.appendChild(newGroupButton);
+                //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
+                //devToolSetCurrGroup(obt.data().name)
             })
+            newGroupButton.setAttribute("onclick", console.log("this button clicks"));
             //newGroupButton.innerHTML = "mytest";                  //Need a a way to get each element from the list of groups to go into inner text here instead of "mytest"
             //console.log("testing" + newGroupButton)
             //newGroupButton.innerHTML = document.getElementById("group-name-dropdown-form").value 
-            groupSideList.appendChild(newGroupButton);            //Adds button to the MyGroups list in the sidebar
+            //groupSideList.appendChild(newGroupButton);            //Adds button to the MyGroups list in the sidebar
             //console.log(newGroupButton) 
-            var nameEntered = document.getElementById("group-name-dropdown-form").value    
-            newGroupButton.setAttribute("onclick", setCurrGroup(nameEntered));
+            //var nameEntered = document.getElementById("group-name-dropdown-form").value    
+           // newGroupButton.setAttribute("onclick", devToolSetCurrGroup(nameEntered));
         });
     });
-
 }
+
+// function testFunction() {
+//     document.getElementById("demo").style.color = "red";
+//   }
 
 function setCurrGroup(name){
     db.collection("groups").where("name", "==", name).get().then(obtained => {
