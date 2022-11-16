@@ -190,6 +190,8 @@ function displayCurrGroup() {
 }
 
 
+
+
 //I need to get the group name list for line 194 and line 199 for this to work
 //Nelson's attempt at dynamically adding groups to sidebar
 function makeGroupList() {
@@ -202,14 +204,18 @@ function makeGroupList() {
             newGroupButton.setAttribute("class", "testbuttonclassname") 
             element.get().then(function(obt) {
                 //obt.data().name
+                let mytextnode = String(obt.data().name);                          //This is just a test to try and turn this into a string for the func on line 215
+                let currGroupName = obt.data().name;
                 newGroupButton.setAttribute("class", "buttonname" + obt.data().name) 
                 newGroupButton.innerHTML = obt.data().name; 
-                console.log(obt.data().name)
                 groupSideList.appendChild(newGroupButton);
                 //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
                 //devToolSetCurrGroup(obt.data().name)
+                //setCurrGroup(obt.data().name)
+                newGroupButton.setAttribute('onclick', 'setCurrGroup("mytextnode")');    //im trying to turn the group name I get into a string for this func but I don't know how
             })
-            newGroupButton.setAttribute("onclick", console.log("this button clicks"));
+            //newGroupButton.setAttribute('onclick', 'setCurrGroup("sorry")');
+            //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
             //newGroupButton.innerHTML = "mytest";                  //Need a a way to get each element from the list of groups to go into inner text here instead of "mytest"
             //console.log("testing" + newGroupButton)
             //newGroupButton.innerHTML = document.getElementById("group-name-dropdown-form").value 
@@ -221,27 +227,19 @@ function makeGroupList() {
     });
 }
 
-// function testFunction() {
-//     document.getElementById("demo").style.color = "red";
-//   }
+function testingMakeGroupList(){
+    document.write("<h1>Hello</h1>");
+}
 
-function setCurrGroup(name){
-    db.collection("groups").where("name", "==", name).get().then(obtained => {
+
+function setCurrGroup(groupName){
+    db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
             currGroup = obtained.docs[0].ref;
-            
-            currGroup.get().then(function(obt) {
-                obt.data().members[0]
-            });
         } else {
             console.log("empty return");
         }       
     });
-
-    // db.collection("groups").limit(1).where("name", "==", name).get().then(obtainGroup => {
-    //     obtainGroup = db.collection("groups").doc(currGroup.id)
-    // })
-    // console.log(obtainGroup);
 }
 
 
