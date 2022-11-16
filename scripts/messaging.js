@@ -18,7 +18,7 @@ button.addEventListener("click", function() {
         message: document.getElementById('textbox').value,
     }).then(function() {
         console.log("New message added to firestore");
-        window.close();
+        //window.close();
     }).catch(function (error) {
         console.log("Error adding new event: " + error);
     });
@@ -29,7 +29,7 @@ button.addEventListener("click", function() {
         username: user.displayName
     }).then(function() {
         console.log("New message added to firestore");
-        window.close();
+        //window.close();
     }).catch(function (error) {
         console.log("Error adding new event: " + error);
     });
