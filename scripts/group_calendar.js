@@ -17,8 +17,6 @@ function createGroupCalendar(groupRef) {
                         });
                     });
                 });
-                
-                
             });
         });
 }

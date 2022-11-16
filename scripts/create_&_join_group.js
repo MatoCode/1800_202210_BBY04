@@ -179,7 +179,10 @@ function clearCodes() {
 
 function displayCurrGroup() {
     if (typeof(currGroup) != "undefined") {
-        console.log(currGroup.data().name);
+        currGroup.get().then(group => {
+            console.log(group.data().name);
+
+        });
     } else {
         console.log("currGroup undefined");
     }
