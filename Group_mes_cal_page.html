@@ -41,7 +41,14 @@
 
     <nav id="navbarTemplate"></nav>
     <div id="sidebar">
-        <div id="groupSideList"><p><b>My Groups</b></p></div>
+        
+        <div id="groupSideList"><p><b>My Groups</b></p>
+            <br>
+            <button id="personalbutton" onlick="loadEvents()">MyCal</button>
+            <br><br><br>
+            <button id="groupbutton1" onlick="loadgroupEvents(currGroup)">default</button>
+        </div>
+        
     </div>
 
     <div class="container">
@@ -87,12 +94,13 @@
     <!--  <nav id="footerTemplate"></nav>   -->
 
     <!-- scripts -->
+    <script src="./scripts/firebaseAPI_TeamBBY04.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/monthcalendar.js"></script>
     <script src="./scripts/messaging.js"></script>
-    <script src="./scripts/firebaseAPI_TeamBBY04.js"></script>
+    
     <script src="./scripts/daily_schedule_edit.js"></script>
-    <script src="./scripts/create_group.js"></script>
+    <!-- <script src="./scripts/create_group.js"></script> -->
     <script src="./scripts/create_&_join_group.js"></script>
 </div>
 </body>

@@ -60,13 +60,13 @@ function createGroup() {
     alert('Group Created!', 'success')
 
 
-    //Nelson's addition of code to add group name to side bar-(ADD THIS CODE TO JOIN GROUP WHEN------------------------------
-    var groupSideList = document.getElementById("groupSideList")
-    var newGroupName = document.createElement("button")
-    db.collection("users").doc(user.uid).groups.forEach(element => { 
-        console.log(devToolSetCurrGroup(currGroup.data().name))
-        //newGroupName.setAttribute("onclick", devToolSetCurrGroup(currGroup.data().name))     
-    });
+    // //Nelson's addition of code to add group name to side bar-(ADD THIS CODE TO JOIN GROUP WHEN------------------------------
+    // var groupSideList = document.getElementById("groupSideList")
+    // var newGroupName = document.createElement("button")
+    // // db.collection("users").doc(user.uid).groups.forEach(element => { 
+    // //     console.log(devToolSetCurrGroup(currGroup.data().name))
+    //     //newGroupName.setAttribute("onclick", devToolSetCurrGroup(currGroup.data().name))     
+    // // });
 
     //newGroupName.setAttribute("href", "Group_mes_cal_page.html")                  //Need to change the html to a unique html with unique ID 
     newGroupName.innerHTML = document.getElementById("group-name-dropdown-form").value

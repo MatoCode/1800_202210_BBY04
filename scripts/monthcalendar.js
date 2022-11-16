@@ -113,18 +113,18 @@ function showCalendar(month, year) {
                     var t3 = year;
                     // var cellid = t3 * 10000 + t2 * 100 + t1;
                     if (t2 < 10) {
-                        if (t3 < 10) {
+                        if (t1 < 10) {
                             cellid = t3 + "0" + t2 + "0" + t1;
                         } else {
                             cellid = t3 + "0" + t2 + t1;
                         }
-                    } else if (t3 < 10) {
+                    } else if (t1 < 10) {
                         cellid = t3 + "" + t2 + "0" + t1;
                     }
                     else {
                         cellid = t3 + "" + t2 + t1;
                     }
-                    var cellid = "" + t3 + t2 + t1;
+                    // var cellid = "" + t3 + t2 + t1;
                     // console.log(t1);
                     // cell.setAttribute("id", cellid);
                     // cell.addEventListener("click", function () {
@@ -224,4 +224,47 @@ function loadEvents() {
     })
 
 
+}
+
+
+function loadgroupEvents() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // console.log(" working...10");// User is signed in.
+            db.collection("users").doc(user.uid).groups
+            db.collection("users").doc(user.uid).collection("calendar").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    doc.data()
+                    eventdate = doc.data().date;
+                    // console.log(eventdate);
+
+                    if (eventdate.substring(0, 7) == (currentYear + '-' + (currentMonth + 1))) {
+                        eventname = doc.data().title;
+                        displaycell = eventdate.substring(0, 4) + eventdate.substring(5, 7) + eventdate.substring(8, 10);
+                        if (doc.data().timeslot == 'AM') {
+                            displaycell += 1;
+                            document.getElementById(displaycell).style.backgroundColor = 'lightpink';
+                        } else if (doc.data().timeslot == 'PM') {
+                            displaycell += 2;
+                            document.getElementById(displaycell).style.backgroundColor = 'lightskyblue';
+                        } else {
+                            displaycell += 3;
+                            document.getElementById(displaycell).style.backgroundColor = 'lightseagreen';
+                        }
+                        console.log("displaycell" + ":" + displaycell + "; eventname:" + eventname);
+                        document.getElementById(displaycell).innerText = eventname;
+                    }
+
+                });
+            })
+                .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                });
+        }
+        else {
+            console.log("not working...10");// User is signed out.
+        }
+    })
+
+    
 }
