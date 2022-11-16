@@ -44,6 +44,7 @@ function createGroup() {
         .then(groupRef => {
             currGroup = groupRef;
             console.log((typeof currGroup) );
+            createGroupCalendar(currGroup);
 
         });
 
@@ -63,7 +64,6 @@ function createGroup() {
     }
 
     createAlert('Group Created!', 'success')
-    createGroupCalendar(ref);
 
     //Nelson's addition of code to add group name to side bar-(ADD THIS CODE TO JOIN GROUP WHEN------------------------------
     // var groupSideList = document.getElementById("groupSideList")
@@ -135,11 +135,6 @@ function groupJoin() {
     });
 
     console.log("join button pressed");
-    // idea: use window.setTimeout(function, milliseconds) to delay a "clear codes" method
-    // after a user in a group creates a group code to pass to user looking
-    // to join the group. the Code will exist in the group until the time passes
-    // and if the joining user enters the code before the delay, they get in, if not, they don't 
-    // since the code has been cleared
 }
 
 function devToolSetCurrGroup(groupName) {
@@ -161,22 +156,6 @@ function devToolSetCurrGroup(groupName) {
     });
 }
 
-function createCode() {
-    var minNum = 10000;
-    var maxnum = 99999;
-    let newCode = Math.floor(Math.random() * (maxnum - minNum + 1)) + minNum;
-    console.log(newCode);
-    db.collection("groups").doc(currGroup).update({
-        codes: firebase.firestore.FieldValue.arrayUnion(newCode)
-    });
-}
-
-function clearCodes() {
-    currGroup.update({
-        codes: deleteField()
-    });
-}
-
 function displayCurrGroup() {
     if (typeof(currGroup) != "undefined") {
         currGroup.get().then(group => {
@@ -188,8 +167,6 @@ function displayCurrGroup() {
     }
     
 }
-
-
 
 
 //I need to get the group name list for line 194 and line 199 for this to work
@@ -242,12 +219,39 @@ function setCurrGroup(groupName){
     });
 }
 
-
-
-
 function devToolDisplayCurrUser() {
     user = firebase.auth().currentUser;
     console.log(user.uid);
+}
+
+function createGroupCalendar(groupRef) {
+    console.log("called create group calendar");
+   groupRef.get()
+        .then(function(groupDoc) {
+            groupRef.collection("calendar").get().then(cal => {
+                if (cal.docs.length > 0) {
+                    
+                }
+
+
+            });
+            let memberList = groupDoc.data().members;
+            memberList.forEach(member => {
+                db.collection("users").doc(member).get().then(user => {
+                    db.collection("users").doc(member).collection("calendar").get()
+                    .then(events => {
+                        events.forEach(event => {
+                            db.collection("groups").doc(groupDoc.id).collection("calendar").add({
+                                title: user.data().name,
+                                date: event.data().date,
+                                timeslot: event.data().timeslot
+                            });
+
+                        });
+                    });
+                });
+            });
+        });
 }
 
 
