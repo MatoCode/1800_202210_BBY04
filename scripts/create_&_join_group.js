@@ -79,7 +79,8 @@ function groupJoin() {
         if (!obtained.empty) {
             currGroup = obtained.docs[0].ref;
             currGroup.update({
-                members: firebase.firestore.FieldValue.arrayUnion(user.uid)
+                members: firebase.firestore.FieldValue.arrayUnion(user.uid),
+                host: user.uid
             });
 
             db.collection("users").doc(userID).update({
@@ -215,12 +216,12 @@ function createGroupCalendar(groupRef) {
    groupRef.get()
         .then(function(groupDoc) {
             groupRef.collection("calendar").get().then(cal => {
-                if (cal.docs.length > 0) {
+            //     if (cal.docs.length > 0) {
                     
-                }
+            //     }
 
 
-            });
+            // });
             let memberList = groupDoc.data().members;
             memberList.forEach(member => {
                 db.collection("users").doc(member).get().then(user => {
