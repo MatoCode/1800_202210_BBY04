@@ -215,7 +215,7 @@ function createGroupCalendar(groupRef) {
     console.log("called create group calendar");
    groupRef.get()
         .then(function(groupDoc) {
-            groupRef.collection("calendar").get().then(cal => {
+            // groupRef.collection("calendar").get().then(cal => {
             //     if (cal.docs.length > 0) {
                     
             //     }
