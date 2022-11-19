@@ -33,7 +33,8 @@ function createGroup() {
 
     ref.set({
         name: groupName,
-        members: [userID]
+        members: [userID],
+        host: userID
     });
 
     db.collection("users").doc(userID).update({
@@ -80,7 +81,6 @@ function groupJoin() {
             currGroup = obtained.docs[0].ref;
             currGroup.update({
                 members: firebase.firestore.FieldValue.arrayUnion(user.uid),
-                host: user.uid
             });
 
             db.collection("users").doc(userID).update({
