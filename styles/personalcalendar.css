@@ -9,7 +9,7 @@ body {
     display: grid;
     margin: 0 auto;
     /**background-color: rgb(253, 215, 0);*/
-    grid-template-columns: 7vw 45vw 40vw;
+    grid-template-columns: 7vw 90vw;
     grid-template-rows: 7vh 93vh;   
   }
 
@@ -43,55 +43,6 @@ body {
   color: white;
   display: block;
 }
-  
-  #messaging {
-    grid-column: 3 / span 1;
-    grid-row: 2 / span 1;
-    display: grid;
-    margin: 0 auto;
-    padding-top: 10px;
-    /**background-color:rgb(253, 215, 0);*/
-    grid-template-columns: 2vw 20vw 10vw;
-    grid-template-rows: 60vh 5vh;
-  }
-   /* #textTypeDiv{
-padding-top: 750px;
-margin: 0 auto;
-padding-left: 300%;
-  }  */
-   #textbox {
-    grid-column: 2 / span 1;
-    grid-row: 1 / span 1;
-    margin-top: 760px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    
-  }
-  #button {
-    grid-column: 3 / span 1;
-    grid-row: 1 / span 1;
-    margin-top: 760px;
-    padding-top: 8px;
-    padding-bottom: 32px;
-  }  
-  #messages{
-    grid-column: 2 / span 2;
-    grid-row: 1 / span 1;
-    word-wrap: break-word;
-    overflow-y: auto;
-    background-color: white;
-    margin: 0 auto;
-    border-radius: 20px;
-    max-width: 475px;
-    min-width: 450px;
-    min-height: 750px;
-    max-height: 801px;
-  }
-  #messages ul{
-    background-color: rgb(255, 238, 5);
-    border-radius: 10px;
-    padding-right: 20px;
-  }
 
 .wrapper {
     margin: 15px auto;

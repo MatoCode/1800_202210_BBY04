@@ -29,15 +29,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!--css library-->
-    <link rel="stylesheet" href="./styles/monthlycalendar.css">
+    <!-- <link rel="stylesheet" href="./styles/monthlycalendar.css"> -->
+    <link rel="stylesheet" href="./styles/personalcalendar.css">
 
 </head>
 
-<body>
+<body onload="makeGroupList()">
+    <div id="mainPage">
 
     <!-- LINK to what I used https://www.codehim.com/date-time/dynamic-calendar-in-javascript-with-example/-->
 
     <nav id="navbarTemplate"></nav>
+
+    
+    <div id="sidebar">
+        
+        <div id="groupSideList"><p><b>My Groups</b></p>
+            <br>
+            <button id="personalbutton" onlick="loadEvents()">My Cal</button>
+            <!-- <br><br><br> -->
+            <!-- <button id="groupbutton1" onlick="loadgroupEvents(currGroup)">default</button> -->
+        </div>
+        
+    </div>
 
     <div class="container">
         <div class="wrapper">
@@ -72,6 +86,7 @@
             </div>
         </div>
     </div>
+    </div>
 
     <nav id="footerTemplate"></nav>
 
@@ -85,6 +100,8 @@
     
     
     <script src="./scripts/create_&_join_group.js"></script>
+
+    <!-- <script src="./scripts/sidebar_list.js"></script> -->
 
 </body>
 
