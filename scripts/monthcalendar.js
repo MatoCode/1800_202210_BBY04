@@ -132,10 +132,10 @@ function showCalendar(month, year) {
                     // });
                     cell.className = "date-picker";
                     // cell.innerHTML = "<span>" + date + "</span>";
-                    cell.innerHTML = "<span>" + date + "</span><br>" 
-                    + "<button class='ameventdisplay' id=" + cellid + "1 onclick='myFunction("+t1+","+t2+","+t3+",\"AM\")'></button><br>"
-                        + "<button class='pmeventdisplay' id=" + cellid + "2 onclick='myFunction("+t1+","+t2+","+t3+",\"PM\")'></button><br>" 
-                        + "<button class='eveeventdisplay' id=" + cellid + "3 onclick='myFunction("+t1+","+t2+","+t3+",\"Eve\")'></button>";
+                    cell.innerHTML = "<span>" + date + "</span><br>"
+                        + "<button class='ameventdisplay' id=" + cellid + "1 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"AM\")'></button><br>"
+                        + "<button class='pmeventdisplay' id=" + cellid + "2 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"PM\")'></button><br>"
+                        + "<button class='eveeventdisplay' id=" + cellid + "3 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"Eve\")'></button>";
 
                     if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                         cell.className = "date-picker selected";
@@ -153,23 +153,12 @@ function showCalendar(month, year) {
         tbl.appendChild(row);
     }
 
-    // function makeItHappen(elem1, elem2, elem3, elem4) {
-    //     console.log(elem1);
-    //     sessionStorage.setItem("date", elem1);
-    //     sessionStorage.setItem("month", elem2);
-    //     sessionStorage.setItem("year", elem3);
-    //     sessionStorage.setItem("cellid", elem4);
-    //     console.log("cellid:" + elem4);
-    //     window.open('daily_schedule_edit.html', "newwindow", "height=600, width=500, top=(screen.height - 600) / 2, left=(screen.width - 500) / 2, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
-    // }
-    loadEvents()
-
+    loadEvents();
+    // or loadgroupEvents(groupid);
 }
-// function myFunction(elem1,elem2, elem3, elem4) {
-//     console.log(elem1 +"button works" + elem2 + elem3 +elem4);
-// }
 
-function myFunction(elem1,elem2,elem3,elem4) {
+
+function myFunction(elem1, elem2, elem3, elem4) {
     console.log("button works");
     // makeItHappen(t1, t2, t3, cellid);
     sessionStorage.setItem("date", elem1);
@@ -197,7 +186,7 @@ function loadEvents() {
 
                     if (eventdate.substring(0, 7) == (currentYear + '-' + (currentMonth + 1))) {
                         eventname = doc.data().title;
-                        displaycell = eventdate.substring(0, 4) + eventdate.substring(5, 7) + eventdate.substring(8, 10);
+                        let displaycell = eventdate.substring(0, 4) + eventdate.substring(5, 7) + eventdate.substring(8, 10);
                         if (doc.data().timeslot == 'AM') {
                             displaycell += 1;
                             document.getElementById(displaycell).style.backgroundColor = 'lightpink';
@@ -208,7 +197,7 @@ function loadEvents() {
                             displaycell += 3;
                             document.getElementById(displaycell).style.backgroundColor = 'lightseagreen';
                         }
-                        console.log("displaycell" + ":" + displaycell + "; eventname:" + eventname);
+                        // console.log("displaycell" + ":" + displaycell + "; eventname:" + eventname);
                         document.getElementById(displaycell).innerText = eventname;
                     }
 
@@ -226,21 +215,49 @@ function loadEvents() {
 
 }
 
+// // get groupid
+// firebase.auth().onAuthStateChanged(user => {
+//     if (user) {
+//         // console.log(" working...10");// User is signed in.
+//         docRef = db.collection("users").doc(user.uid);
 
-function loadgroupEvents() {
+//         docRef.get().then((doc) => {
+//             console.log("Cached document data:", doc.data());
+//             group_list = doc.data().groups
+//             for (i = 0; i < group_list.length; i++) {
+//                 groupid = group_list[i];
+//                 console.log(groupid);
+
+//             }
+
+//         }).catch((error) => {
+//             console.log("Error getting cached document:", error);
+//         });
+
+//     }
+//     else {
+//         console.log("not working...10");// User is signed out.
+//     }
+// })
+// loadgroupEvents("tFnveRf4TMwUGdW8T8KP");
+function loadgroupEvents(groupid) {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            // console.log(" working...10");// User is signed in.
-            db.collection("users").doc(user.uid).groups
-            db.collection("users").doc(user.uid).collection("calendar").get().then((querySnapshot) => {
+            document.getElementsByClassName("date-picker").innerText = "";
+            if (db.collection("groups").doc(groupid).host != user.id) {
+                document.getElementsByClassName("date-picker").disabled = true;
+            } else {
+                document.getElementsByClassName("date-picker").disabled = false;
+            }
+
+            db.collection("groups").doc(groupid).collection("calendar").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     doc.data()
                     eventdate = doc.data().date;
-                    // console.log(eventdate);
 
                     if (eventdate.substring(0, 7) == (currentYear + '-' + (currentMonth + 1))) {
                         eventname = doc.data().title;
-                        displaycell = eventdate.substring(0, 4) + eventdate.substring(5, 7) + eventdate.substring(8, 10);
+                        let displaycell = eventdate.substring(0, 4) + eventdate.substring(5, 7) + eventdate.substring(8, 10);
                         if (doc.data().timeslot == 'AM') {
                             displaycell += 1;
                             document.getElementById(displaycell).style.backgroundColor = 'lightpink';
@@ -251,8 +268,10 @@ function loadgroupEvents() {
                             displaycell += 3;
                             document.getElementById(displaycell).style.backgroundColor = 'lightseagreen';
                         }
-                        console.log("displaycell" + ":" + displaycell + "; eventname:" + eventname);
-                        document.getElementById(displaycell).innerText = eventname;
+                        // console.log("displaycell" + ":" + displaycell + "; eventname:" + eventname);
+                        // document.getElementById(displaycell).innerText = eventname.substring(0,6);
+                        document.getElementById(displaycell).innerText += eventname.substring(0, 1).toUpperCase() + ".";
+                        document.getElementById(displaycell).disabled = true;
                     }
 
                 });
@@ -266,5 +285,5 @@ function loadgroupEvents() {
         }
     })
 
-    
+
 }

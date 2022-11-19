@@ -202,6 +202,8 @@ body {
     cursor: pointer;
     display: inline-block;
     zoom: 1;
+    height: 20px;
+    width: 50px;
     background: white;
     border:none;
     /* background: lightseagreen; */

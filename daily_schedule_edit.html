@@ -38,19 +38,34 @@
             <label for="eventdate">Date:</label>
             <input type="date" id="event_date" name="event_date"><br><br>
             <p>TimeSlot:</p>
-            <input type="radio" class="timeslot" name="timeslot" value="AM" checked="checked">
+            <input type="checkbox" class="timeslot" name="timeslot" value="AM">
             <label for="AM">AM</label><br>
-            <input type="radio" class="timeslot" name="timeslot" value="PM">
+            <input type="checkbox" class="timeslot" name="timeslot" value="PM">
             <label for="PM">PM</label><br>
-            <input type="radio" class="timeslot" name="timeslot" value="Eve">
+            <input type="checkbox" class="timeslot" name="timeslot" value="Eve">
             <label for="Eve">Eve</label>
             <br><br>
+            <!-- <div id="groupshare">
+                <p>Share with:</p>
+                <input type="checkbox" class="grouplist" name="grouplist" value="groupid1">
+                <label for="AM">group1</label><br>
+                <input type="checkbox" class="grouplist" name="grouplist" value="groupid2">
+                <label for="PM">group2</label><br>
+                <input type="checkbox" class="grouplist" name="grouplist" value="groupid3">
+                <label for="Eve">group3</label>
+            </div>
+
+            <br><br> -->
+
+            <br><br>
+
             <a href="#" onclick="window.close();return false;"><button class="btn btn-primary"
                     type="button">Cancel</button></a>
-            <!-- <input type="submit" class="btn btn-primary" onclick="insertEvent()" value="Add"> -->
+            
             <a href="#"><button class="btn btn-primary" type="button" onclick="insertEvent()">Add</button></a>
 
             <br><br><br>
+            <!-- Delete function with confirmation  -->
             <a href="#" onclick="confirmation()"><button class="btn btn-primary"
                 type="button">Delete</button></a>
         </form>

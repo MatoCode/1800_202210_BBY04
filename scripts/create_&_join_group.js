@@ -22,7 +22,7 @@ function validateName() {
 
 function createGroup() {
     user = firebase.auth().currentUser;
-    
+
     const groupsRef = db.collection('groups');
     let userID = user.uid;
     let groupName = document.getElementById("group-name-dropdown-form").value;
@@ -43,7 +43,7 @@ function createGroup() {
     db.collection("groups").doc(ref.id).get()
         .then(groupRef => {
             currGroup = groupRef;
-            console.log((typeof currGroup) );
+            console.log((typeof currGroup));
             createGroupCalendar(currGroup);
 
         });
@@ -51,15 +51,15 @@ function createGroup() {
     const groupCreateSuccessAlert = document.getElementById('group-create-success-alert');
 
     const createAlert = (message, type) => {
-      const wrapper = document.createElement('div')
-      wrapper.innerHTML = [
-        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-        `   <div>${message}</div>`,
-        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-        '</div>'
-      ].join('')
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `   <div>${message}</div>`,
+            '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+            '</div>'
+        ].join('')
 
-      groupCreateSuccessAlert.append(wrapper)
+        groupCreateSuccessAlert.append(wrapper)
 
     }
 
@@ -67,10 +67,10 @@ function createGroup() {
 
 
     document.getElementById("group-name-dropdown-form").value = "";
-    
+
 }
 
-function groupJoin() { 
+function groupJoin() {
     let name = document.getElementById("group-Name-dropdown-form").value;
     user = firebase.auth().currentUser;
     userID = user.uid;
@@ -93,12 +93,12 @@ function groupJoin() {
             const joinAlert = (message, type) => {
                 const wrapper = document.createElement('div')
                 wrapper.innerHTML = [
-                  `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-                  `   <div>${message}</div>`,
-                  '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
-                  '</div>'
+                    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                    `   <div>${message}</div>`,
+                    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                    '</div>'
                 ].join('')
-          
+
                 groupJoinSuccessAlert.append(wrapper)
             }
 
@@ -114,7 +114,7 @@ function groupJoin() {
             console.log("empty return");
         }
 
-        
+
         // obtained.forEach(doc => {
         //     console.log(doc.data().name);
         // });
@@ -128,8 +128,8 @@ function devToolSetCurrGroup(groupName) {
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
             currGroup = obtained.docs[0].ref;
-            
-            currGroup.get().then(function(obt) {
+
+            currGroup.get().then(function (obt) {
                 console.log("devtool set name " + obt.data().name);
                 console.log("devtool " + obt.data().members[0]);
 
@@ -139,12 +139,12 @@ function devToolSetCurrGroup(groupName) {
         } else {
             console.log("empty return");
         }
-        
+
     });
 }
 
 function displayCurrGroup() {
-    if (typeof(currGroup) != "undefined") {
+    if (typeof (currGroup) != "undefined") {
         currGroup.get().then(group => {
             console.log(group.data().name);
 
@@ -152,7 +152,7 @@ function displayCurrGroup() {
     } else {
         console.log("currGroup undefined");
     }
-    
+
 }
 
 
@@ -160,18 +160,18 @@ function displayCurrGroup() {
 //Nelson's attempt at dynamically adding groups to sidebar
 function makeGroupList() {
     user = firebase.auth().currentUser;
-    db.collection("users").doc(user.uid).get().then(function(userDoc) {
-        userDoc.data().groups.forEach((element) => {  
+    db.collection("users").doc(user.uid).get().then(function (userDoc) {
+        userDoc.data().groups.forEach((element) => {
             //console.log("group name here" + element.get().then())                                //for each runs thru the number of elements(groups) that the user is a part of
             var groupSideList = document.getElementById("groupSideList");
-            var newGroupButton = document.createElement("button"); 
-            newGroupButton.setAttribute("class", "testbuttonclassname") 
-            element.get().then(function(obt) {
+            var newGroupButton = document.createElement("button");
+            newGroupButton.setAttribute("class", "testbuttonclassname")
+            element.get().then(function (obt) {
                 //obt.data().name
                 let mytextnode = String(obt.data().name);                          //This is just a test to try and turn this into a string for the func on line 215
                 let currGroupName = obt.data().name;
-                newGroupButton.setAttribute("class", "buttonname" + obt.data().name) 
-                newGroupButton.innerHTML = obt.data().name; 
+                newGroupButton.setAttribute("class", "buttonname" + obt.data().name)
+                newGroupButton.innerHTML = obt.data().name;
                 groupSideList.appendChild(newGroupButton);
                 //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
                 //devToolSetCurrGroup(obt.data().name)
@@ -186,23 +186,23 @@ function makeGroupList() {
             //groupSideList.appendChild(newGroupButton);            //Adds button to the MyGroups list in the sidebar
             //console.log(newGroupButton) 
             //var nameEntered = document.getElementById("group-name-dropdown-form").value    
-           // newGroupButton.setAttribute("onclick", devToolSetCurrGroup(nameEntered));
+            // newGroupButton.setAttribute("onclick", devToolSetCurrGroup(nameEntered));
         });
     });
 }
 
-function testingMakeGroupList(){
+function testingMakeGroupList() {
     document.write("<h1>Hello</h1>");
 }
 
 
-function setCurrGroup(groupName){
+function setCurrGroup(groupName) {
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
             currGroup = obtained.docs[0].ref;
         } else {
             console.log("empty return");
-        }       
+        }
     });
 }
 
@@ -213,33 +213,34 @@ function devToolDisplayCurrUser() {
 
 function createGroupCalendar(groupRef) {
     console.log("called create group calendar");
-   groupRef.get()
-        .then(function(groupDoc) {
-            // groupRef.collection("calendar").get().then(cal => {
-            //     if (cal.docs.length > 0) {
-                    
-            //     }
+    groupRef.get()
+        .then(function (groupDoc) {
+            groupRef.collection("calendar").get().then(cal => {
+                //     if (cal.docs.length > 0) {
+
+                //     }
 
 
-            // });
-            let memberList = groupDoc.data().members;
-            memberList.forEach(member => {
-                db.collection("users").doc(member).get().then(user => {
-                    db.collection("users").doc(member).collection("calendar").get()
-                    .then(events => {
-                        events.forEach(event => {
-                            db.collection("groups").doc(groupDoc.id).collection("calendar").add({
-                                title: user.data().name,
-                                date: event.data().date,
-                                timeslot: event.data().timeslot
+                // });
+                let memberList = groupDoc.data().members;
+                memberList.forEach(member => {
+                    db.collection("users").doc(member).get().then(user => {
+                        db.collection("users").doc(member).collection("calendar").get()
+                            .then(events => {
+                                events.forEach(event => {
+                                    db.collection("groups").doc(groupDoc.id).collection("calendar").add({
+                                        title: user.data().name,
+                                        date: event.data().date,
+                                        timeslot: event.data().timeslot
+                                    });
+
+                                });
                             });
-
-                        });
                     });
                 });
             });
-        });
-}
+        })
+    }
 
 
 

@@ -51,28 +51,34 @@ function insertEvent() {
     user = firebase.auth().currentUser;
     if (user) {
 
+        // var ele = document.getElementsByClassName('grouplist');
+        // for (i = 0; i < ele.length; i++) {
+        //     if (ele[i].checked)
+        //         console.log(ele[i].value);
+        // }
+
+        //write event information to firestore users/calendar collection
+        data_selected = document.getElementById('event_date').value;
         //get time slot information
         var ele = document.getElementsByClassName('timeslot');
         for (i = 0; i < ele.length; i++) {
             if (ele[i].checked)
                 timeslot_selected = ele[i].value;
+            else
+                continue;
+            calendarId = data_selected + timeslot_selected;
+            db.collection("users").doc(user.uid).collection("calendar").doc(calendarId).set({         //write to firestore. We are using the UID for the ID in users collection
+                title: document.getElementById('event_title').value,
+                date: data_selected,
+                timeslot: timeslot_selected
+            }).then(function () {
+                console.log("New calendar added to firestore");
+                window.opener && window.opener.location.reload();//refresh calendar page
+                window.close();
+            }).catch(function (error) {
+                console.log("Error adding new event: " + error);
+            });
         }
-
-        //write event information to firestore users/calendar collection
-        data_selected = document.getElementById('event_date').value;
-        calendarId = data_selected + timeslot_selected;
-        db.collection("users").doc(user.uid).collection("calendar").doc(calendarId).set({         //write to firestore. We are using the UID for the ID in users collection
-            title: document.getElementById('event_title').value,
-            date: data_selected,
-            timeslot: timeslot_selected
-        }).then(function () {
-            console.log("New calendar added to firestore");
-            window.opener && window.opener.location.reload();//refresh calendar page
-            window.close();
-        }).catch(function (error) {
-            console.log("Error adding new event: " + error);
-        });
-
 
     } else {
         // No user is signed in.
@@ -97,22 +103,6 @@ function confirmation() {
                 }).catch((error) => {
                     console.error("Error removing document: ", error);
                 });
-
-                
-                // docRef.get().then((doc) => {
-                //     if (doc.exists) {
-                //         console.log("confirming");
-                //         console.log(docRef);
-                //         docRef.delete();
-                //         // alert("Event deleted!");
-                //         window.opener && window.opener.location.reload();//refresh calendar page
-                //         window.close();
-                //     } else {
-                //         console.log("not existing");
-                //     }
-                // }).catch((error) => {
-                //     console.log("Error getting document:", error);
-                // });
             }
             else {
                 console.log("not working...10");// User is signed out.
