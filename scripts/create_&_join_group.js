@@ -212,7 +212,7 @@ function makeGroupList() {
                 //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
                 //devToolSetCurrGroup(obt.data().name)
                 //setCurrGroup(obt.data().name)
-                newGroupButton.setAttribute('onclick', 'setCurrGroup("mytextnode")');    //im trying to turn the group name I get into a string for this func but I don't know how
+                newGroupButton.setAttribute('onclick', 'setCurrGroup("' + obt.data().name + '")');    //im trying to turn the group name I get into a string for this func but I don't know how
             })
             //newGroupButton.setAttribute('onclick', 'setCurrGroup("sorry")');
             //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
