@@ -153,11 +153,15 @@ function showCalendar(month, year) {
         tbl.appendChild(row);
     }
 
-    loadEvents();
+    // loadEvents();
     // or loadgroupEvents(groupid);
 }
 
-
+function loadMyCal() {
+    showCalendar(currentMonth, currentYear);
+    loadEvents();
+    document.getElementById("messaging").style.display="none";
+}
 function myFunction(elem1, elem2, elem3, elem4) {
     console.log("button works");
     // makeItHappen(t1, t2, t3, cellid);
@@ -172,6 +176,10 @@ function daysInMonth(iMonth, iYear) {
     return 32 - new Date(iYear, iMonth, 32).getDate();
 }
 
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+        document.getElementById("username_goes_here").innerHTML = user.displayName;
+    }})
 
 function loadEvents() {
     firebase.auth().onAuthStateChanged(user => {
@@ -241,6 +249,10 @@ function loadEvents() {
 // })
 // loadgroupEvents("tFnveRf4TMwUGdW8T8KP");
 function loadgroupEvents(groupid) {
+    showCalendar(currentMonth, currentYear);
+    document.getElementById("messaging").style.display="block";
+    document.getElementById("textbox").style.margin="auto";
+    document.getElementById("button").style.margin="auto";
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             document.getElementsByClassName("date-picker").innerText = "";

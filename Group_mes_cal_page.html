@@ -16,16 +16,18 @@
     <!-------------------------------------------------------->
     <!-- Firebase 8 Library related CSS, JS, JQuery go here -->
     <!-------------------------------------------------------->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script> 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script> 
-    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>  
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" /> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
 
     <!-- JQuery library -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous">
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!--css library-->
@@ -36,74 +38,138 @@
 </head>
 
 <body>
-<div id="mainPage">
-    <!-- LINK to what I used https://www.codehim.com/date-time/dynamic-calendar-in-javascript-with-example/-->
+    <div id="mainPage">
+        <!-- LINK to what I used https://www.codehim.com/date-time/dynamic-calendar-in-javascript-with-example/-->
 
-    <nav id="navbarTemplate"></nav>
-    <div id="sidebar">
-        
-        <div id="groupSideList"><p><b>My Groups</b></p>
-            <br>
-            <button id="personalbutton" onlick="loadEvents()">My Cal</button>
+        <!-- <nav id="navbarTemplate"></nav> -->
+        <div id="sidebar">
+            <div></div>
+            <div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="group_mes_cal_page.html">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="monthlycalendar.html">My Calendar</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="groupSideList">
+                <p><b><span id="username_goes_here"></span>'s Cal</b></p>
+                <br>
+                <button id="personalbutton" class="testbuttonclassname" onclick="loadMyCal()"> My Cal</button></a>
+                <!-- <a href="monthlycalendar.html">
+                    <button id="personalbutton" class="testbuttonclassname" onlick="">My Cal</button></a>
+                 -->
+                 <br><br>
+            </div>
+            <div class="nav navbar-nav ml-auto">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="join-group-dropdown-button"
+                        data-bs-toggle="dropdown" aria-haspopup="true" data-bs-auto-close="outside"
+                        aria-expanded="false">
+                        Join Group
+                    </button>
+                    <div id="join-group-form" class="dropdown-menu dropdown-menu-end "
+                        aria-labelledby="join-group-dropdown-button">
+                        <form class="px-4 py-3" onsubmit="return false">
+                            <div class="mb-3">
+                                <label for="group-code-dropdown-form" class="form-label">Group Name</label>
+                                <input type="text" class="form-control" id="group-Name-dropdown-form"
+                                    placeholder="Name">
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="group-join-submit-button"
+                                onclick="groupJoin()">Join</button>
+                            <div>
+                                <hr class="dropdown-divider">
+                            </div>
+                            <div id="group-join-success-alert"></div>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="create-group-dropdown-button"
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true"
+                        aria-expanded="false">
+                        Create Group
+                    </button>
+                    <div id="create-group-form" class="dropdown-menu dropdown-menu-end"
+                        aria-labelledby="create-group-dropdown-button">
+                        <form class="px-4 py-3" onsubmit="return false">
+                            <div class="mb-3">
+                                <label for="group-name-dropdown-form" class="form-label">Group Name</label>
+                                <input type="text" class="form-control" id="group-name-dropdown-form" placeholder="name"
+                                    required="required" pattern="(?=.*[a-zA-Z0-9]).{3,}">
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="group-create-submit-button"
+                                onclick="groupCreation()">Create</button>
+                            <div>
+                                <hr class="dropdown-divider">
+                            </div>
+                            <div id="group-create-success-alert"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <!-- <br><br><br> -->
             <!-- <button id="groupbutton1" onlick="loadgroupEvents(currGroup)">default</button> -->
         </div>
-        
-    </div>
 
-    <div class="container">
-        <div class="wrapper">
-            <div class="container-calendar">
-                <h3 id="monthAndYear"></h3>
-                <div class="button-container-calendar">
-                    <button id="previous" onclick="previous()">&#8249;</button>
-                    <button id="next" onclick="next()">&#8250;</button>
-                </div>
-                <table class="table-calendar" id="calendar" data-lang="en">
-                    <thead id="thead-month"></thead>
-                    <tbody id="calendar-body"></tbody>
-                </table>
-                <div class="footer-container-calendar">
-                    <label for="month">Jump To: </label>
-                    <select id="month" onchange="jump()">
-                        <option value=0>Jan</option>
-                        <option value=1>Feb</option>
-                        <option value=2>Mar</option>
-                        <option value=3>Apr</option>
-                        <option value=4>May</option>
-                        <option value=5>Jun</option>
-                        <option value=6>Jul</option>
-                        <option value=7>Aug</option>
-                        <option value=8>Sep</option>
-                        <option value=9>Oct</option>
-                        <option value=10>Nov</option>
-                        <option value=11>Dec</option>
-                    </select>
-                    <select id="year" onchange="jump()"></select>
+
+        <div class="container">
+            <div class="wrapper">
+                <div class="container-calendar">
+                    <h3 id="monthAndYear"></h3>
+                    <div class="button-container-calendar">
+                        <button id="previous" onclick="previous()">&#8249;</button>
+                        <button id="next" onclick="next()">&#8250;</button>
+                    </div>
+                    <table class="table-calendar" id="calendar" data-lang="en">
+                        <thead id="thead-month"></thead>
+                        <tbody id="calendar-body"></tbody>
+                    </table>
+                    <div class="footer-container-calendar">
+                        <label for="month">Jump To: </label>
+                        <select id="month" onchange="jump()">
+                            <option value=0>Jan</option>
+                            <option value=1>Feb</option>
+                            <option value=2>Mar</option>
+                            <option value=3>Apr</option>
+                            <option value=4>May</option>
+                            <option value=5>Jun</option>
+                            <option value=6>Jul</option>
+                            <option value=7>Aug</option>
+                            <option value=8>Sep</option>
+                            <option value=9>Oct</option>
+                            <option value=10>Nov</option>
+                            <option value=11>Dec</option>
+                        </select>
+                        <select id="year" onchange="jump()"></select>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div id="messaging">
+            <ul id="messages"></ul>
+            <input id="textbox" placeholder="Enter message" type="text">
+            <button id="button">Send</button>
+
+        </div>
+
+        <!--  <nav id="footerTemplate"></nav>   -->
+
+        <!-- scripts -->
+        <script src="./scripts/firebaseAPI_TeamBBY04.js"></script>
+        <script src="./scripts/skeleton.js"></script>
+        <script src="./scripts/monthcalendar.js"></script>
+        <script src="./scripts/messaging.js"></script>
+
+        <script src="./scripts/daily_schedule_edit.js"></script>
+        <script src="./scripts/create_&_join_group.js"></script>
+
     </div>
-
-    <div id = "messaging">
-        <ul id="messages"></ul>   
-        <input id="textbox" placeholder="Enter message" type = "text" >
-        <button id="button">Send</button>
-
-    </div>
-
-    <!--  <nav id="footerTemplate"></nav>   -->
-
-    <!-- scripts -->
-    <script src="./scripts/firebaseAPI_TeamBBY04.js"></script>
-    <script src="./scripts/skeleton.js"></script>
-    <script src="./scripts/monthcalendar.js"></script>
-    <script src="./scripts/messaging.js"></script>
-    
-    <script src="./scripts/daily_schedule_edit.js"></script>
-    <script src="./scripts/create_&_join_group.js"></script>
-
-</div>
 </body>
 
 </html>

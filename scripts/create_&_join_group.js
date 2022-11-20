@@ -69,6 +69,13 @@ function createGroup() {
 
     document.getElementById("group-name-dropdown-form").value = "";
 
+    //add a button in main page when a new group is created
+    var newGroupButton = document.createElement("button");
+    newGroupButton.setAttribute("class", "testbuttonclassname")
+    newGroupButton.innerHTML = groupName;
+    let groupid = ref.id;
+    newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+    document.getElementById("groupSideList").appendChild(newGroupButton);
 }
 
 function groupJoin() {
@@ -103,6 +110,14 @@ function groupJoin() {
             }
 
             joinAlert('Group joined', 'success');
+
+            //add a button in main page when joined a new group
+            var newGroupButton = document.createElement("button");
+            newGroupButton.setAttribute("class", "testbuttonclassname")
+            newGroupButton.innerHTML = name;
+            let groupid = currGroup.id;
+            newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+            document.getElementById("groupSideList").appendChild(newGroupButton);
 
 
             currGroup.get().then(group => {
@@ -158,42 +173,54 @@ function displayCurrGroup() {
 
 //I need to get the group name list for line 194 and line 199 for this to work
 //Nelson's attempt at dynamically adding groups to sidebar
-function makeGroupList() {
-    user = firebase.auth().currentUser;
-    db.collection("users").doc(user.uid).get().then(function (userDoc) {
-        userDoc.data().groups.forEach((element) => {
-            //console.log("group name here" + element.get().then())                                //for each runs thru the number of elements(groups) that the user is a part of
-            var groupSideList = document.getElementById("groupSideList");
-            var newGroupButton = document.createElement("button");
-            newGroupButton.setAttribute("class", "testbuttonclassname")
-            element.get().then(function (obt) {
-                //obt.data().name
-                let mytextnode = String(obt.data().name);                          //This is just a test to try and turn this into a string for the func on line 215
-                let currGroupName = obt.data().name;
-                newGroupButton.setAttribute("class", "buttonname" + obt.data().name)
-                newGroupButton.innerHTML = obt.data().name;
-                groupSideList.appendChild(newGroupButton);
-                //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
-                //devToolSetCurrGroup(obt.data().name)
-                //setCurrGroup(obt.data().name)
-                newGroupButton.setAttribute('onclick', 'setCurrGroup("' + obt.data().name + '")');    //im trying to turn the group name I get into a string for this func but I don't know how
+function loadGroupList() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+
+            var docRef = db.collection("users").doc(user.uid);
+
+            docRef.get().then((doc) => {
+                let curGrouplist = doc.data().groups;
+                // let groupName = db.collection("groups").doc(curGrouplist[i]).name;
+                for (let i = 0; i < curGrouplist.length; i++) {
+                    groupRef = curGrouplist[i];
+                    groupRef.get().then(function(docg) {
+                        groupName = docg.data().name
+                        let newGroupButton = document.createElement("button");
+                        newGroupButton.setAttribute("class", "testbuttonclassname");
+                        newGroupButton.innerHTML = groupName;
+                        let groupid = docg.id;
+                        newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+                        document.getElementById("groupSideList").appendChild(newGroupButton);
+                        let newLine = document.createElement("p");
+                        document.getElementById("groupSideList").appendChild(newLine);
+                    })
+            }
             })
-            //newGroupButton.setAttribute('onclick', 'setCurrGroup("sorry")');
-            //newGroupButton.setAttribute("onclick", console.log("this button clicks"));
-            //newGroupButton.innerHTML = "mytest";                  //Need a a way to get each element from the list of groups to go into inner text here instead of "mytest"
-            //console.log("testing" + newGroupButton)
-            //newGroupButton.innerHTML = document.getElementById("group-name-dropdown-form").value 
-            //groupSideList.appendChild(newGroupButton);            //Adds button to the MyGroups list in the sidebar
-            //console.log(newGroupButton) 
-            //var nameEntered = document.getElementById("group-name-dropdown-form").value    
-            // newGroupButton.setAttribute("onclick", devToolSetCurrGroup(nameEntered));
-        });
-    });
+        }})
 }
 
-function testingMakeGroupList() {
-    document.write("<h1>Hello</h1>");
-}
+
+
+// db.collection("users").doc(user.uid).get().then(function (userDoc) {
+//     userDoc.data().groups.forEach((element) => {
+//         var newGroupButton = document.createElement("button");
+//         newGroupButton.setAttribute("class", "testbuttonclassname")
+//         element.get().then(function (obt) {
+//             //obt.data().name
+//             // let mytextnode = String(obt.data().name);                          //This is just a test to try and turn this into a string for the func on line 215
+//             // let currGroupName = obt.data().name;
+//             newGroupButton.setAttribute("class", "buttonname" + obt.data().name)
+//             newGroupButton.innerHTML = obt.data().name;
+//             newGroupButton.setAttribute('onclick', ''); 
+//             document.getElementById("groupSideList").appendChild(newGroupButton);
+//                //im trying to turn the group name I get into a string for this func but I don't know how
+//         })
+//     });
+// });
+
+
+loadGroupList();
 
 
 function setCurrGroup(groupName) {
@@ -240,7 +267,7 @@ function createGroupCalendar(groupRef) {
                 });
             });
         })
-    }
+}
 
 
 
