@@ -49,29 +49,29 @@ document.getElementById("thead-month").innerHTML = $dataHead;
 
 
 monthAndYear = document.getElementById("monthAndYear");
-showCalendar(currentMonth, currentYear);
+showCalendar(currentMonth, currentYear,"");
 loadEvents();
 
 
 function next() {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
-    showCalendar(currentMonth, currentYear);
+    showCalendar(currentMonth, currentYear,"");
 }
 
 function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    showCalendar(currentMonth, currentYear);
+    showCalendar(currentMonth, currentYear,"");
 }
 
 function jump() {
     currentYear = parseInt(selectYear.value);
     currentMonth = parseInt(selectMonth.value);
-    showCalendar(currentMonth, currentYear);
+    showCalendar(currentMonth, currentYear,"");
 }
 
-function showCalendar(month, year) {
+function showCalendar(month, year,groupid) {
 
     var firstDay = (new Date(year, month)).getDay();
 
@@ -133,9 +133,9 @@ function showCalendar(month, year) {
                     cell.className = "date-picker";
                     // cell.innerHTML = "<span>" + date + "</span>";
                     cell.innerHTML = "<span>" + date + "</span><br>"
-                        + "<button class='ameventdisplay' id=" + cellid + "1 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"AM\")'></button><br>"
-                        + "<button class='pmeventdisplay' id=" + cellid + "2 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"PM\")'></button><br>"
-                        + "<button class='eveeventdisplay' id=" + cellid + "3 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"Eve\")'></button>";
+                        + "<button class='ameventdisplay' id=" + cellid + "1 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"AM\",\"" + groupid+ "\")'></button><br>"
+                        + "<button class='pmeventdisplay' id=" + cellid + "2 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"PM\",\"" + groupid+ "\")'></button><br>"
+                        + "<button class='eveeventdisplay' id=" + cellid + "3 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"Eve\",\"" + groupid+ "\")'></button>";
 
                     if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                         cell.className = "date-picker selected";
@@ -158,18 +158,19 @@ function showCalendar(month, year) {
 }
 
 function loadMyCal() {
-    showCalendar(currentMonth, currentYear);
+    showCalendar(currentMonth, currentYear,"");
     loadEvents();
     document.getElementById("messaging").style.display="none";
 }
-function myFunction(elem1, elem2, elem3, elem4) {
+function myFunction(elem1, elem2, elem3, elem4,elem5) {
     console.log("button works");
     // makeItHappen(t1, t2, t3, cellid);
     sessionStorage.setItem("date", elem1);
     sessionStorage.setItem("month", elem2);
     sessionStorage.setItem("year", elem3);
     sessionStorage.setItem("timeslot", elem4);
-    console.log("timeslot:" + elem4);
+    sessionStorage.setItem("groupid", elem5);
+    // console.log("timeslot:" + elem4);
     window.open('daily_schedule_edit.html', "newwindow", "height=600, width=500, top=(screen.height - 600) / 2, left=(screen.width - 500) / 2, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
 }
 function daysInMonth(iMonth, iYear) {
@@ -191,9 +192,10 @@ function loadEvents() {
                     doc.data()
                     eventdate = doc.data().date;
                     // console.log(eventdate);
-
+                    console.log(eventdate);
                     if (eventdate.substring(0, 7) == (currentYear + '-' + (currentMonth + 1))) {
                         eventname = doc.data().title;
+
                         let displaycell = eventdate.substring(0, 4) + eventdate.substring(5, 7) + eventdate.substring(8, 10);
                         if (doc.data().timeslot == 'AM') {
                             displaycell += 1;
@@ -249,7 +251,7 @@ function loadEvents() {
 // })
 // loadgroupEvents("tFnveRf4TMwUGdW8T8KP");
 function loadgroupEvents(groupid) {
-    showCalendar(currentMonth, currentYear);
+    showCalendar(currentMonth, currentYear,groupid);
     document.getElementById("messaging").style.display="block";
     document.getElementById("textbox").style.margin="auto";
     document.getElementById("button").style.margin="auto";
