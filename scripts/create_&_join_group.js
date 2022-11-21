@@ -44,8 +44,9 @@ function createGroup() {
     db.collection("groups").doc(ref.id).get()
         .then(groupRef => {
             currGroup = groupRef;
-            console.log((typeof currGroup));
-            createGroupCalendar(currGroup);
+            console.log("testing type : " + (typeof currGroup));
+            console.log("testing id: " + currGroup.id);
+            createGroupCalendar(ref);
 
         });
 
@@ -110,6 +111,8 @@ function groupJoin() {
             }
 
             joinAlert('Group joined', 'success');
+
+            createGroupCalendar(currGroup);
 
             //add a button in main page when joined a new group
             var newGroupButton = document.createElement("button");
@@ -243,13 +246,13 @@ function createGroupCalendar(groupRef) {
     groupRef.get()
         .then(function (groupDoc) {
             groupRef.collection("calendar").get().then(cal => {
-                //     if (cal.docs.length > 0) {
+                    if (cal.docs.length > 0) {
+                        cal.docs.forEach((doc) => {
+                            groupRef.collection("calendar").doc(doc.id).delete();
+                        });
+                    }
 
-                //     }
-
-
-                // });
-                let memberList = groupDoc.data().members;
+                    let memberList = groupDoc.data().members;
                 memberList.forEach(member => {
                     db.collection("users").doc(member).get().then(user => {
                         db.collection("users").doc(member).collection("calendar").get()
@@ -265,9 +268,43 @@ function createGroupCalendar(groupRef) {
                             });
                     });
                 });
+
             });
-        })
+                
+        });
 }
 
+function leaveGroup(groupRef) {
+    console.log("called leave group");
+        
+            console.log("in leave group");
+            console.log("current user:" + currentUser.uid);
+            groupRef.update({
+                members: firebase.firestore.FieldValue.arrayRemove(currentUser.id)
+            }).then(() => {
+                db.collection("users").doc(currentUser.id).update({    
+                    groups: firebase.firestore.FieldValue.arrayRemove(groupRef)
+                        
+                });
+
+                groupRef.get()
+                    .then(function (groupDoc) {
+                        console.log("members left: " + groupDoc.data().members.length);
+                        if (groupDoc.data().members.length <= 0) {
+                            groupRef.collection("calendar").get().then(cal => {
+                                cal.docs.forEach((doc) => {
+                                    groupRef.collection("calendar").doc(doc.id).delete();
+                                });
+                            });
+                            db.collection("groups").doc(groupRef.id).delete();
+                        }
+                    });
+                
+            })
+            
+
+
+        
+}
 
 
