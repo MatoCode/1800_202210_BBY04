@@ -72,7 +72,7 @@ function jump() {
 }
 
 function showCalendar(month, year,groupid) {
-
+    sessionStorage.setItem("groupid", groupid);
     var firstDay = (new Date(year, month)).getDay();
 
     tbl = document.getElementById("calendar-body");
@@ -225,32 +225,8 @@ function loadEvents() {
 
 }
 
-// // get groupid
-// firebase.auth().onAuthStateChanged(user => {
-//     if (user) {
-//         // console.log(" working...10");// User is signed in.
-//         docRef = db.collection("users").doc(user.uid);
-
-//         docRef.get().then((doc) => {
-//             console.log("Cached document data:", doc.data());
-//             group_list = doc.data().groups
-//             for (i = 0; i < group_list.length; i++) {
-//                 groupid = group_list[i];
-//                 console.log(groupid);
-
-//             }
-
-//         }).catch((error) => {
-//             console.log("Error getting cached document:", error);
-//         });
-
-//     }
-//     else {
-//         console.log("not working...10");// User is signed out.
-//     }
-// })
-// loadgroupEvents("tFnveRf4TMwUGdW8T8KP");
 function loadgroupEvents(groupid) {
+    loadgroupMessage(groupid);
     showCalendar(currentMonth, currentYear,groupid);
     document.getElementById("messaging").style.display="block";
     document.getElementById("textbox").style.margin="auto";
@@ -301,3 +277,52 @@ function loadgroupEvents(groupid) {
 
 
 }
+
+//load group message history
+function loadgroupMessage(groupid) {
+    // display all the messages
+    document.getElementById("messages").innerText="";
+    var messageRef = db.collection("groups").doc(groupid).collection("messagingText");
+    messageRef.orderBy("timestamp")
+    .get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            let textnode = document.createTextNode(doc.data().username);
+            messages.appendChild(textnode);
+            let newMessage = document.createElement("ul")
+            newMessage.innerHTML = doc.data().message;
+            messages.appendChild(newMessage);
+        })});
+}
+
+var messages = document.getElementById("messages")
+var textbox = document.getElementById("textbox")
+var button = document.getElementById("button")
+
+button.addEventListener("click", function() {
+    var currentGroup = sessionStorage.getItem("groupid");
+    var newMessage = document.createElement("ul")
+
+    const db = firebase.firestore();
+    user = firebase.auth().currentUser;
+
+    newMessage.innerHTML = textbox.value;
+ 
+      //Store username
+      db.collection("groups").doc(currentGroup).collection("messagingText").add({          
+          message: document.getElementById('textbox').value,
+          username: user.displayName,
+          timestamp: Date.now()
+      }).then(function() {
+          console.log("New message added to firestore");
+          //window.close();
+      }).catch(function (error) {
+          console.log("Error adding new event: " + error);
+      });
+  
+      console.log(newMessage)
+      //displays user name and appends to text
+      const textnode = document.createTextNode(user.displayName);
+      messages.appendChild(textnode);
+      messages.appendChild(newMessage);
+      textbox.value = "";
+    })
