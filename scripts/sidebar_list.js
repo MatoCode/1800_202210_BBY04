@@ -18,12 +18,13 @@ function makeGroupList() {
     });
 }
 
-function setCurrGroup(groupName){
-    db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
-        if (!obtained.empty) {
-            currGroup = obtained.docs[0].ref;
-        } else {
-            console.log("empty return");
-        }       
-    });
-}
+// function setCurrGroup(groupName){
+//     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
+//         if (!obtained.empty) {
+//             currGroup = obtained.docs[0].ref;
+//             loadgroupEvents(currGroup.id);
+//         } else {
+//             console.log("empty return");
+//         }       
+//     });
+// }
