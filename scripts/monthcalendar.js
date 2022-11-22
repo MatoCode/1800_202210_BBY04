@@ -161,6 +161,8 @@ function loadMyCal() {
     showCalendar(currentMonth, currentYear,"");
     loadEvents();
     document.getElementById("messaging").style.display="none";
+    document.getElementById('calendarBox').style.minWidth="1000px";
+    document.getElementById('calendarBox').style.paddingLeft="60%";
 }
 function myFunction(elem1, elem2, elem3, elem4,elem5) {
     console.log("button works");
@@ -231,6 +233,8 @@ function loadgroupEvents(groupid) {
     document.getElementById("messaging").style.display="block";
     document.getElementById("textbox").style.margin="auto";
     document.getElementById("button").style.margin="auto";
+    document.getElementById('calendarBox').style.minWidth="auto";
+    document.getElementById('calendarBox').style.paddingLeft="0px";
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             document.getElementsByClassName("date-picker").innerText = "";
