@@ -161,8 +161,7 @@ function loadMyCal() {
     showCalendar(currentMonth, currentYear,"");
     loadEvents();
     document.getElementById("messaging").style.display="none";
-    document.getElementById('calendarBox').style.minWidth="1000px";
-    document.getElementById('calendarBox').style.paddingLeft="60%";
+    //document.getElementById('calendarBox').style.margin="15px auto";
 }
 function myFunction(elem1, elem2, elem3, elem4,elem5) {
     console.log("button works");
