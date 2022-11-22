@@ -193,7 +193,8 @@ function loadGroupList() {
                         newGroupButton.setAttribute("class", "testbuttonclassname");
                         newGroupButton.innerHTML = groupName;
                         let groupid = docg.id;
-                        newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+                        // newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+                        newGroupButton.setAttribute('onclick', 'setCurrGroup("' + groupName + '")'); 
                         document.getElementById("groupSideList").appendChild(newGroupButton);
                         let newLine = document.createElement("p");
                         document.getElementById("groupSideList").appendChild(newLine);
@@ -203,38 +204,26 @@ function loadGroupList() {
         }})
 }
 
+function setCurrGroup(groupName){
+    db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
+        if (!obtained.empty) {
+            currGroup = obtained.docs[0].ref;
+            // window.location.href = "Group_mes_cal_page.html";
+            loadgroupEvents(currGroup.id);
+            createGroupCalendar(currGroup);
+        } else {
+            console.log("empty return");
+        }       
+    });
+}
 
 
-// db.collection("users").doc(user.uid).get().then(function (userDoc) {
-//     userDoc.data().groups.forEach((element) => {
-//         var newGroupButton = document.createElement("button");
-//         newGroupButton.setAttribute("class", "testbuttonclassname")
-//         element.get().then(function (obt) {
-//             //obt.data().name
-//             // let mytextnode = String(obt.data().name);                          //This is just a test to try and turn this into a string for the func on line 215
-//             // let currGroupName = obt.data().name;
-//             newGroupButton.setAttribute("class", "buttonname" + obt.data().name)
-//             newGroupButton.innerHTML = obt.data().name;
-//             newGroupButton.setAttribute('onclick', ''); 
-//             document.getElementById("groupSideList").appendChild(newGroupButton);
-//                //im trying to turn the group name I get into a string for this func but I don't know how
-//         })
-//     });
-// });
 
 
 loadGroupList();
 
 
-function setCurrGroup(groupName) {
-    db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
-        if (!obtained.empty) {
-            currGroup = obtained.docs[0].ref;
-        } else {
-            console.log("empty return");
-        }
-    });
-}
+
 
 function devToolDisplayCurrUser() {
     user = firebase.auth().currentUser;
