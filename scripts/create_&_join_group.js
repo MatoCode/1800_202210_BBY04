@@ -79,6 +79,31 @@ function createGroup() {
     document.getElementById("groupSideList").appendChild(newGroupButton);
 }
 
+function groupLeave() {
+    let name = document.getElementById("leave-group-Name-dropdown-form").value;
+
+    currentUser.get().then(user => {
+        let i = 0;
+        let found = false;
+        while (i < user.data().groups.length && found == false) {
+            user.data().groups[i].get().then(group => {
+                if (group.data().name == name) {
+                    console.log(i);
+                    console.log(group.ref);
+                    leaveGroup(group.ref);
+                    console.log("Group leave successfully found");
+                    found = true;
+                }
+            });
+            i++;
+        };
+
+        if (found = false) {
+            console.log("Group not found");
+        }
+    });
+}
+
 function groupJoin() {
     let name = document.getElementById("group-Name-dropdown-form").value;
     user = firebase.auth().currentUser;

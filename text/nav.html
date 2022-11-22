@@ -58,6 +58,25 @@
             </form>
           </div>
         </div>
+
+        <div class="nav navbar-nav ml-auto">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="leave-group-dropdown-button" data-bs-toggle="dropdown" aria-haspopup="true" data-bs-auto-close="outside" aria-expanded="false">
+              Leave Group 
+            </button>
+            <div id="leave-group-form" class="dropdown-menu dropdown-menu-end " aria-labelledby="leave-group-dropdown-button">
+              <form class="px-4 py-3" onsubmit="return false">
+                <div class="mb-3">
+                  <label for="group-code-dropdown-form" class="form-label">Group Name</label>
+                  <input type="text" class="form-control" id="leave-group-Name-dropdown-form" placeholder="Name">
+                </div>
+                <button type="submit" class="btn btn-primary" id="group-leave-submit-button" onclick="groupLeave()">Leave</button>
+                <div><hr class="dropdown-divider"></div>
+                <div id="group-leave-success-alert"></div>
+              </form>
+            </div>
+          </div>
+
       </div>
 
       <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
