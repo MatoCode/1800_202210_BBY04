@@ -230,9 +230,9 @@ function loadEvents() {
 function loadgroupEvents(groupid) {
     loadgroupMessage(groupid);
     showCalendar(currentMonth, currentYear,groupid);
-    document.getElementById("messaging").style.display="block";
-    document.getElementById("textbox").style.margin="auto";
-    document.getElementById("button").style.margin="auto";
+    document.getElementById("messaging").style.display="grid";
+    //document.getElementById("textbox").style.margin="auto";
+    //document.getElementById("button").style.margin="auto";
     document.getElementById('calendarBox').style.minWidth="auto";
     document.getElementById('calendarBox').style.paddingLeft="0px";
     firebase.auth().onAuthStateChanged(user => {
