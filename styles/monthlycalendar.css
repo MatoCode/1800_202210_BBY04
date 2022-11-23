@@ -346,3 +346,10 @@ padding-left: 300%;
   height: 30px;
   width: 100px;
 }
+
+
+#groupSideList > button{
+  height: 70px;
+  width: 80%;
+  word-wrap: break-word;
+}
