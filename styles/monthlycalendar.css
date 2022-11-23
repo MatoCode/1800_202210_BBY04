@@ -68,14 +68,14 @@ padding-left: 300%;
    #textbox {
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
-    margin-top: 760px;
+    margin-top: 810px;
     padding-top: 20px;
     padding-bottom: 20px;  
   }
   #button {
     grid-column: 3 / span 1;
     grid-row: 1 / span 1;
-    margin-top: 760px;
+    margin-top: 810px;
     padding-top: 8px;
     padding-bottom: 32px;
   }  
@@ -89,8 +89,8 @@ padding-left: 300%;
     border-radius: 20px;
     max-width: 475px;
     min-width: 450px;
-    min-height: 750px;
-    max-height: 801px;
+    min-height: 800px;
+    max-height: 850px;
   }
   #messages ul{
     background-color: rgb(255, 238, 5);
@@ -257,32 +257,62 @@ padding-left: 300%;
   text-align: center;
 }
 
-#amLegend {
+.amLegend {
+  width: 28px;
+  height: 28px;
+  background: rgb(0, 0, 0);
+  margin-bottom: 100px;
+  border-radius: 15px; 
+  margin:0 auto;
+  shape-outside: border-box;
+}
+
+.amLegend::before{
+  content:"";
   width: 25px;
   height: 25px;
+  position: absolute;
   background: lightpink;
-  margin-bottom: 100px;
-  border-radius: 10px;
-  border:#1b1717;
-  border-width: 3px;
+  border-radius: 10px; 
   margin:0 auto
 }
 
-#pmLegend {
+.pmLegend {
+  width: 28px;
+  height: 28px;
+  background: rgb(0, 0, 0);
+  margin-bottom: 100px;
+  border-radius: 15px; 
+  margin:0 auto;
+  shape-outside: border-box;
+}
+
+.pmLegend::before{
+  content:"";
   width: 25px;
   height: 25px;
+  position: absolute;
   background: lightskyblue;
-  margin-bottom: 100px;
-  border-radius: 10px;
+  border-radius: 10px; 
   margin:0 auto
 }
+.eveLegend {
+  width: 28px;
+  height: 28px;
+  background: rgb(0, 0, 0);
+  margin-bottom: 100px;
+  border-radius: 15px; 
+  margin:0 auto;
+  shape-outside: border-box;
+}
 
-#eveLegend {
+.eveLegend::before{
+  content:"";
   width: 25px;
   height: 25px;
+  position: absolute;
   background: lightseagreen;
-  margin-bottom: 100px;
-  border-radius: 10px;
+  border-radius: 10px; 
   margin:0 auto
 }
 
