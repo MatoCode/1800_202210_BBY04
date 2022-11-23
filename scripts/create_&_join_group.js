@@ -199,8 +199,8 @@ function displayCurrGroup() {
 }
 
 
-//I need to get the group name list for line 194 and line 199 for this to work
-//Nelson's attempt at dynamically adding groups to sidebar
+
+//Dynamically loads a list of groupsthe user is a part of in the sidebar
 function loadGroupList() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -216,6 +216,7 @@ function loadGroupList() {
                         groupName = docg.data().name
                         let newGroupButton = document.createElement("button");
                         newGroupButton.setAttribute("class", "testbuttonclassname");
+                        newGroupButton.setAttribute("class", "btn btn-primary");
                         newGroupButton.innerHTML = groupName;
                         let groupid = docg.id;
                         // newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');

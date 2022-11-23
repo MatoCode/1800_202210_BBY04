@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Nastaliq+Urdu);
 
 body {
-    background-image: url("/images/try.jpg");
+    background-image: url("/images/try2.jpg");
 
 }
 
@@ -24,8 +24,12 @@ body {
   #sidebar{
     grid-column: 1 / span 1;
     grid-row: 1 / span 10;
-    /*background-color: rgb(226, 75, 15);*/
-    background-image: url("/images/try2.jpg");
+    border-right: solid;
+    border-color: #212529;
+    border-width: 15px;
+    /* border-style: ; */
+    /* background-color: rgb(199, 184, 184); */
+    /* background-image: url("/images/try2.jpg"); */
   }
   #groupSideList{
     padding-top: 100px;
@@ -43,6 +47,7 @@ body {
   color: white;
   display: block;
 }
+
   
   #messaging {
     grid-column: 3 / span 1;
