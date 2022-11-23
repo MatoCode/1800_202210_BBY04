@@ -1,18 +1,13 @@
-// document.querySelector("#group-create-submit-button").addEventListener("click", function() { 
-
-// if (validateName()) {
-//     createGroup();
-// }
-
-// }, false);
 var currGroup;
 
+// Checks if the given name in the create group form is a valid name, then calls createGroup if it is.
 function groupCreation() {
     if (validateName()) {
         createGroup();
     }
 }
 
+// Checks if given name in the create group from is valid name. returns true if valid.
 function validateName() {
     var testName = document.getElementById("group-name-dropdown-form").value;
     var nameRegex = /^(?=.*[a-zA-Z0-9]).{3,}/;
@@ -20,6 +15,7 @@ function validateName() {
     return validateResult;
 }
 
+// On Create group submit button clicked, reads the name given in the create group form and creates a group with that name. Places the creating user as the host and it's first member.
 function createGroup() {
     user = firebase.auth().currentUser;
 
@@ -80,6 +76,7 @@ function createGroup() {
     // document.getElementById("groupSideList").appendChild(newGroupButton);
 }
 
+// On Leave group submit button pressed, read the name from the leave group form and try to find a group with the name out of the user's groups. leaves the first group with that name it finds.
 function groupLeave() {
     let name = document.getElementById("leave-group-Name-dropdown-form").value;
 
@@ -106,6 +103,7 @@ function groupLeave() {
     });
 }
 
+// On join group submit button pressed, read the name from the join group form and try to find a group with the name. joins the first group with that name that it finds.
 function groupJoin() {
     let name = document.getElementById("group-Name-dropdown-form").value;
     user = firebase.auth().currentUser;
@@ -154,7 +152,6 @@ function groupJoin() {
                 console.log("devtool " + group.data().name);
             });
 
-            console.log("devtool " + currGroup.id);
         } else {
             console.log("empty return");
         }
@@ -166,9 +163,9 @@ function groupJoin() {
         // currently this does not set the currGroup the same as the create group function. need to discuss if this method is better or not.
     });
 
-    console.log("join button pressed");
 }
 
+// Sets the current group to the first group with the given name -------- devtool
 function devToolSetCurrGroup(groupName) {
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
@@ -188,6 +185,7 @@ function devToolSetCurrGroup(groupName) {
     });
 }
 
+//Displays current group in console. ----- devtool
 function displayCurrGroup() {
     if (typeof (currGroup) != "undefined") {
         currGroup.get().then(group => {
@@ -207,6 +205,7 @@ function loadGroupList() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
 
+            //Clears the existing group buttons before adding new ones.
             var docRef = db.collection("users").doc(user.uid);
             if (document.getElementById("groupSideList").getElementsByClassName("btn btn-light").length > 0) {
                 let buttons = document.getElementById("groupSideList").getElementsByClassName("btn btn-light");
@@ -240,6 +239,7 @@ function loadGroupList() {
         }})
 }
 
+
 function setCurrGroup(groupName){
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
@@ -260,7 +260,7 @@ loadGroupList();
 
 
 
-
+// Displays the current user ID in the console. --------- devtool
 function devToolDisplayCurrUser() {
     user = firebase.auth().currentUser;
     console.log(user.uid);
@@ -299,11 +299,9 @@ function createGroupCalendar(groupRef) {
         });
 }
 
+// Removes the given group from the user's group list, and removes the user from the group's member list. If this user is the last user in the group, the group is deleted.
 function leaveGroup(groupRef) {
-    console.log("called leave group");
         
-            console.log("in leave group");
-            console.log("current user:" + currentUser.uid);
             groupRef.update({
                 members: firebase.firestore.FieldValue.arrayRemove(currentUser.id)
             }).then(() => {
@@ -316,7 +314,6 @@ function leaveGroup(groupRef) {
 
                 groupRef.get()
                     .then(function (groupDoc) {
-                        console.log("members left: " + groupDoc.data().members.length);
                         if (groupDoc.data().members.length <= 0) {
                             groupRef.collection("calendar").get().then(cal => {
                                 cal.docs.forEach((doc) => {
@@ -325,13 +322,8 @@ function leaveGroup(groupRef) {
                             });
                             db.collection("groups").doc(groupRef.id).delete();
                         }
-                    });
-                
-            })
-            
-
-
-        
+                    });  
+            })       
 }
 
 
