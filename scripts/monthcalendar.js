@@ -49,29 +49,29 @@ document.getElementById("thead-month").innerHTML = $dataHead;
 
 
 monthAndYear = document.getElementById("monthAndYear");
-showCalendar(currentMonth, currentYear,"");
+showCalendar(currentMonth, currentYear, "");
 loadEvents();
 
 
 function next() {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
-    showCalendar(currentMonth, currentYear,"");
+    showCalendar(currentMonth, currentYear, "");
 }
 
 function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    showCalendar(currentMonth, currentYear,"");
+    showCalendar(currentMonth, currentYear, "");
 }
 
 function jump() {
     currentYear = parseInt(selectYear.value);
     currentMonth = parseInt(selectMonth.value);
-    showCalendar(currentMonth, currentYear,"");
+    showCalendar(currentMonth, currentYear, "");
 }
 
-function showCalendar(month, year,groupid) {
+function showCalendar(month, year, groupid) {
     sessionStorage.setItem("groupid", groupid);
     var firstDay = (new Date(year, month)).getDay();
 
@@ -133,9 +133,9 @@ function showCalendar(month, year,groupid) {
                     cell.className = "date-picker";
                     // cell.innerHTML = "<span>" + date + "</span>";
                     cell.innerHTML = "<span>" + date + "</span><br>"
-                        + "<button class='ameventdisplay' id=" + cellid + "1 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"AM\",\"" + groupid+ "\")'></button><br>"
-                        + "<button class='pmeventdisplay' id=" + cellid + "2 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"PM\",\"" + groupid+ "\")'></button><br>"
-                        + "<button class='eveeventdisplay' id=" + cellid + "3 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"Eve\",\"" + groupid+ "\")'></button>";
+                        + "<button class='ameventdisplay' id=" + cellid + "1 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"AM\",\"" + groupid + "\")'></button><br>"
+                        + "<button class='pmeventdisplay' id=" + cellid + "2 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"PM\",\"" + groupid + "\")'></button><br>"
+                        + "<button class='eveeventdisplay' id=" + cellid + "3 onclick='myFunction(" + t1 + "," + t2 + "," + t3 + ",\"Eve\",\"" + groupid + "\")'></button>";
 
                     if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
                         cell.className = "date-picker selected";
@@ -158,12 +158,12 @@ function showCalendar(month, year,groupid) {
 }
 
 function loadMyCal() {
-    showCalendar(currentMonth, currentYear,"");
+    showCalendar(currentMonth, currentYear, "");
     loadEvents();
-    document.getElementById("messaging").style.display="none";
+    document.getElementById("messaging").style.display = "none";
     //document.getElementById('calendarBox').style.margin="15px auto";
 }
-function myFunction(elem1, elem2, elem3, elem4,elem5) {
+function myFunction(elem1, elem2, elem3, elem4, elem5) {
     console.log("button works");
     // makeItHappen(t1, t2, t3, cellid);
     sessionStorage.setItem("date", elem1);
@@ -181,7 +181,8 @@ function daysInMonth(iMonth, iYear) {
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
         document.getElementById("username_goes_here").innerHTML = user.displayName;
-    }})
+    }
+})
 
 function loadEvents() {
     firebase.auth().onAuthStateChanged(user => {
@@ -228,12 +229,21 @@ function loadEvents() {
 
 function loadgroupEvents(groupid) {
     loadgroupMessage(groupid);
-    showCalendar(currentMonth, currentYear,groupid);
-    document.getElementById("messaging").style.display="grid";
+
+    var gRef = db.collection("groups").doc(groupid);
+
+    gRef.get().then((doc) => {
+        document.getElementById("groupDisplayName").innerText=doc.data().name;
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+
+    showCalendar(currentMonth, currentYear, groupid);
+    document.getElementById("messaging").style.display = "grid";
     //document.getElementById("textbox").style.margin="auto";
     //document.getElementById("button").style.margin="auto";
-    document.getElementById('calendarBox').style.minWidth="auto";
-    document.getElementById('calendarBox').style.paddingLeft="0px";
+    document.getElementById('calendarBox').style.minWidth = "auto";
+    document.getElementById('calendarBox').style.paddingLeft = "0px";
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             document.getElementsByClassName("date-picker").innerText = "";
@@ -242,18 +252,18 @@ function loadgroupEvents(groupid) {
             } else {
                 document.getElementsByClassName("date-picker").disabled = false;
                 let elementsam = document.getElementsByClassName('ameventdisplay'); // get all elements
-                for(var i = 0; i < elementsam.length; i++){
+                for (var i = 0; i < elementsam.length; i++) {
                     elementsam[i].style.backgroundColor = "#0bb32f";
                 }
                 let elementspm = document.getElementsByClassName('pmeventdisplay'); // get all elements
-                for(var i = 0; i < elementspm.length; i++){
+                for (var i = 0; i < elementspm.length; i++) {
                     elementspm[i].style.backgroundColor = "#0bb32f";
                 }
                 let elementseve = document.getElementsByClassName('eveeventdisplay'); // get all elements
-                for(var i = 0; i < elementseve.length; i++){
+                for (var i = 0; i < elementseve.length; i++) {
                     elementseve[i].style.backgroundColor = "#0bb32f";
                 }
-                
+
             }
 
             db.collection("groups").doc(groupid).collection("calendar").get().then((querySnapshot) => {
@@ -297,24 +307,25 @@ function loadgroupEvents(groupid) {
 //load group message history
 function loadgroupMessage(groupid) {
     // display all the messages
-    document.getElementById("messages").innerText="";
+    document.getElementById("messages").innerText = "";
     var messageRef = db.collection("groups").doc(groupid).collection("messagingText");
     messageRef.orderBy("timestamp")
-    .get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            let textnode = document.createTextNode(doc.data().username);
-            messages.appendChild(textnode);
-            let newMessage = document.createElement("ul")
-            newMessage.innerHTML = doc.data().message;
-            messages.appendChild(newMessage);
-        })});
+        .get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                let textnode = document.createTextNode(doc.data().username);
+                messages.appendChild(textnode);
+                let newMessage = document.createElement("ul")
+                newMessage.innerHTML = doc.data().message;
+                messages.appendChild(newMessage);
+            })
+        });
 }
 
 var messages = document.getElementById("messages")
 var textbox = document.getElementById("textbox")
 var button = document.getElementById("button")
 
-button.addEventListener("click", function() {
+button.addEventListener("click", function () {
     var currentGroup = sessionStorage.getItem("groupid");
     var newMessage = document.createElement("ul")
 
@@ -322,23 +333,23 @@ button.addEventListener("click", function() {
     user = firebase.auth().currentUser;
 
     newMessage.innerHTML = textbox.value;
- 
-      //Store username
-      db.collection("groups").doc(currentGroup).collection("messagingText").add({          
-          message: document.getElementById('textbox').value,
-          username: user.displayName,
-          timestamp: Date.now()
-      }).then(function() {
-          console.log("New message added to firestore");
-          //window.close();
-      }).catch(function (error) {
-          console.log("Error adding new event: " + error);
-      });
-  
-      console.log(newMessage)
-      //displays user name and appends to text
-      const textnode = document.createTextNode(user.displayName);
-      messages.appendChild(textnode);
-      messages.appendChild(newMessage);
-      textbox.value = "";
-    })
+
+    //Store username
+    db.collection("groups").doc(currentGroup).collection("messagingText").add({
+        message: document.getElementById('textbox').value,
+        username: user.displayName,
+        timestamp: Date.now()
+    }).then(function () {
+        console.log("New message added to firestore");
+        //window.close();
+    }).catch(function (error) {
+        console.log("Error adding new event: " + error);
+    });
+
+    console.log(newMessage)
+    //displays user name and appends to text
+    const textnode = document.createTextNode(user.displayName);
+    messages.appendChild(textnode);
+    messages.appendChild(newMessage);
+    textbox.value = "";
+})
