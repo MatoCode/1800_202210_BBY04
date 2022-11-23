@@ -216,7 +216,7 @@ function loadGroupList() {
                         groupName = docg.data().name
                         let newGroupButton = document.createElement("button");
                         newGroupButton.setAttribute("class", "testbuttonclassname");
-                        newGroupButton.setAttribute("class", "btn btn-primary");
+                        newGroupButton.setAttribute("class", "btn btn-light");
                         newGroupButton.innerHTML = groupName;
                         let groupid = docg.id;
                         // newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');

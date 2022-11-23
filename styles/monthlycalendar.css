@@ -37,6 +37,7 @@ body {
     overflow-y: auto;
     font-family:'Noto+Nastaliq+Urdu';
     text-align: center;
+    word-wrap: break-word;
   }
   #groupSideList p{
     font-size: 20px;
@@ -251,13 +252,47 @@ padding-left: 300%;
     z-index: 2;
 }
 
+.legendTitle{
+  margin: 0 auto;
+  text-align: center;
+}
+
+#amLegend {
+  width: 25px;
+  height: 25px;
+  background: lightpink;
+  margin-bottom: 100px;
+  border-radius: 10px;
+  border:#1b1717;
+  border-width: 3px;
+  margin:0 auto
+}
+
+#pmLegend {
+  width: 25px;
+  height: 25px;
+  background: lightskyblue;
+  margin-bottom: 100px;
+  border-radius: 10px;
+  margin:0 auto
+}
+
+#eveLegend {
+  width: 25px;
+  height: 25px;
+  background: lightseagreen;
+  margin-bottom: 100px;
+  border-radius: 10px;
+  margin:0 auto
+}
+
 @media only screen and (max-width: 1090px) and (min-width: 500px) {
 
   #mainPage {
     display: grid;
     margin: 0 auto;
     /**background-color: rgb(253, 215, 0);*/
-    grid-template-columns: 12vw 80vw 0vw;
+    grid-template-columns: 12vw 85vw 0vw;
     grid-template-rows: 7vh 93vh 93vh;   
   }
 
