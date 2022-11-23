@@ -71,12 +71,13 @@ function createGroup() {
     document.getElementById("group-name-dropdown-form").value = "";
 
     //add a button in main page when a new group is created
-    var newGroupButton = document.createElement("button");
-    newGroupButton.setAttribute("class", "testbuttonclassname")
-    newGroupButton.innerHTML = groupName;
-    let groupid = ref.id;
-    newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
-    document.getElementById("groupSideList").appendChild(newGroupButton);
+    loadGroupList();
+    // var newGroupButton = document.createElement("button");
+    // newGroupButton.setAttribute("class", "testbuttonclassname")
+    // newGroupButton.innerHTML = groupName;
+    // let groupid = ref.id;
+    // newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+    // document.getElementById("groupSideList").appendChild(newGroupButton);
 }
 
 function groupLeave() {
@@ -100,7 +101,8 @@ function groupLeave() {
 
         if (found = false) {
             console.log("Group not found");
-        }
+        } 
+        
     });
 }
 
@@ -206,16 +208,24 @@ function loadGroupList() {
         if (user) {
 
             var docRef = db.collection("users").doc(user.uid);
+            if (document.getElementById("groupSideList").getElementsByClassName("btn btn-light").length > 0) {
+                let buttons = document.getElementById("groupSideList").getElementsByClassName("btn btn-light");
+                while (buttons.length > 0) {
+                    document.getElementById("groupSideList").removeChild(buttons.item(0));
+                }
+            }
 
             docRef.get().then((doc) => {
+
                 let curGrouplist = doc.data().groups;
+                
                 // let groupName = db.collection("groups").doc(curGrouplist[i]).name;
                 for (let i = 0; i < curGrouplist.length; i++) {
                     groupRef = curGrouplist[i];
                     groupRef.get().then(function(docg) {
                         groupName = docg.data().name
                         let newGroupButton = document.createElement("button");
-                        newGroupButton.setAttribute("class", "testbuttonclassname");
+                        //newGroupButton.setAttribute("class", "testbuttonclassname");
                         newGroupButton.setAttribute("class", "btn btn-light");
                         newGroupButton.innerHTML = groupName;
                         let groupid = docg.id;
@@ -300,6 +310,8 @@ function leaveGroup(groupRef) {
                 db.collection("users").doc(currentUser.id).update({    
                     groups: firebase.firestore.FieldValue.arrayRemove(groupRef)
                         
+                }).then(() => {
+                    loadGroupList();
                 });
 
                 groupRef.get()
