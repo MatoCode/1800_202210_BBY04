@@ -161,6 +161,9 @@ function loadMyCal() {
     showCalendar(currentMonth, currentYear, "");
     loadEvents();
     document.getElementById("messaging").style.display = "none";
+    document.getElementById("legend2").style.display = "none";
+    document.getElementById("legend").style.display = "grid";
+    document.getElementById("groupDisplayName").style.display = "none";
     //document.getElementById('calendarBox').style.margin="15px auto";
 }
 function myFunction(elem1, elem2, elem3, elem4, elem5) {
@@ -244,6 +247,9 @@ function loadgroupEvents(groupid) {
     //document.getElementById("button").style.margin="auto";
     document.getElementById('calendarBox').style.minWidth = "auto";
     document.getElementById('calendarBox').style.paddingLeft = "0px";
+    document.getElementById('legend').style.display = "none";
+    document.getElementById('legend2').style.display = "grid";
+    document.getElementById("groupDisplayName").style.display = "grid";
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             document.getElementsByClassName("date-picker").innerText = "";
@@ -276,13 +282,13 @@ function loadgroupEvents(groupid) {
                         let displaycell = eventdate.substring(0, 4) + eventdate.substring(5, 7) + eventdate.substring(8, 10);
                         if (doc.data().timeslot == 'AM') {
                             displaycell += 1;
-                            document.getElementById(displaycell).style.backgroundColor = 'grey';
+                            document.getElementById(displaycell).style.backgroundColor = '#929292';
                         } else if (doc.data().timeslot == 'PM') {
                             displaycell += 2;
-                            document.getElementById(displaycell).style.backgroundColor = 'grey';
+                            document.getElementById(displaycell).style.backgroundColor = '#929292';
                         } else {
                             displaycell += 3;
-                            document.getElementById(displaycell).style.backgroundColor = 'grey';
+                            document.getElementById(displaycell).style.backgroundColor = '#929292';
                         }
                         // console.log("displaycell" + ":" + displaycell + "; eventname:" + eventname);
                         // document.getElementById(displaycell).innerText = eventname.substring(0,6);
