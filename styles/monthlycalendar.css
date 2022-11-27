@@ -257,6 +257,44 @@ padding-left: 300%;
   text-align: center;
 }
 
+.availableLegend {
+  width: 28px;
+  height: 28px;
+  background: rgb(0, 0, 0);
+  margin-bottom: 100px;
+  border-radius: 15px; 
+  margin:0 auto;
+  shape-outside: border-box;
+}
+
+.availableLegend::before{
+  content:"";
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  background: #0bb32f;
+  border-radius: 10px; 
+  margin:0 auto
+}
+.notAvailableLegend {
+  width: 28px;
+  height: 28px;
+  background: rgb(0, 0, 0);
+  margin-bottom: 100px;
+  border-radius: 15px; 
+  margin:0 auto;
+  shape-outside: border-box;
+}
+
+.notAvailableLegend::before{
+  content:"";
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  background: #929292;
+  border-radius: 10px; 
+  margin:0 auto
+}
 .amLegend {
   width: 28px;
   height: 28px;
@@ -314,6 +352,17 @@ padding-left: 300%;
   background: lightseagreen;
   border-radius: 10px; 
   margin:0 auto
+}
+
+#groupDisplayName{
+  display: grid;
+  font-size: 25px;
+  font-family:'Noto+Nastaliq+Urdu';
+  text-align: center;
+  margin: 0 auto;
+}
+.container-fluid{
+  text-align: center;
 }
 
 @media only screen and (max-width: 1090px) and (min-width: 500px) {
