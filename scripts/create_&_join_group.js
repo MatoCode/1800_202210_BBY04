@@ -239,7 +239,7 @@ function loadGroupList() {
         }})
 }
 
-
+// sets the currGroup to the first group with given name.
 function setCurrGroup(groupName){
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
@@ -266,6 +266,7 @@ function devToolDisplayCurrUser() {
     console.log(user.uid);
 }
 
+// Creates group calendar out of the personal calendars of every member of given group.
 function createGroupCalendar(groupRef) {
     console.log("called create group calendar");
     groupRef.get()

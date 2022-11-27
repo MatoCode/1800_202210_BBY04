@@ -57,12 +57,22 @@ function next() {
     currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
     showCalendar(currentMonth, currentYear, "");
+    if (currGroup == null) {
+        loadEvents();
+    } else {
+        loadgroupEvents(currGroup.id);
+    }
 }
 
 function previous() {
     currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
     currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
     showCalendar(currentMonth, currentYear, "");
+    if (currGroup == null) {
+        loadEvents();
+    } else {
+        loadgroupEvents(currGroup.id);
+    }
 }
 
 function jump() {
@@ -160,6 +170,7 @@ function showCalendar(month, year, groupid) {
 function loadMyCal() {
     showCalendar(currentMonth, currentYear, "");
     loadEvents();
+    currGroup = null;
     document.getElementById("messaging").style.display = "none";
     document.getElementById("legend2").style.display = "none";
     document.getElementById("legend").style.display = "grid";
