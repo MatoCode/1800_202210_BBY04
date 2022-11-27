@@ -208,7 +208,7 @@ function loadEvents() {
                     doc.data()
                     eventdate = doc.data().date;
                     // console.log(eventdate);
-                    console.log(eventdate);
+                    // console.log(eventdate);
                     if (eventdate.substring(0, 7) == (currentYear + '-' + (currentMonth + 1))) {
                         eventname = doc.data().title;
 
