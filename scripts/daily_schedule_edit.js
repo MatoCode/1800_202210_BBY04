@@ -35,7 +35,12 @@ if (document.title == 'daily schedule edit page') {
 }
 
 function LoadExistingEvent() {
-    document.getElementById("event_date").value = year + "-" + month + "-" + date;
+    if (date < 10) {
+        document.getElementById("event_date").value = year + "-" + month + "-0" + date;
+    } else {
+        document.getElementById("event_date").value = year + "-" + month + "-" + date;
+    }
+    // document.getElementById("event_date").value = year + "-" + month + "-" + date;
     slotset = ['AM', 'PM', 'Eve'];
     //get time slot information
     var ele = document.getElementsByClassName('timeslot');
@@ -73,7 +78,12 @@ function LoadExistingEvent() {
 //add a new event. 
 function insertEvent() {
     console.log("insertEvent....");
-    document.getElementById("event_date").value = year + "-" + month + "-" + date;
+    if (date < 10) {
+        document.getElementById("event_date").value = year + "-" + month + "-0" + date;
+    } else {
+        document.getElementById("event_date").value = year + "-" + month + "-" + date;
+    }
+    // document.getElementById("event_date").value = year + "-" + month + "-" + date;
     if (groupid == "") {
         // currently signed-in user:
         user = firebase.auth().currentUser;
