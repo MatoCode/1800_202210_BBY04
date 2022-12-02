@@ -68,12 +68,6 @@ function createGroup() {
 
     //add a button in main page when a new group is created
     loadGroupList();
-    // var newGroupButton = document.createElement("button");
-    // newGroupButton.setAttribute("class", "testbuttonclassname")
-    // newGroupButton.innerHTML = groupName;
-    // let groupid = ref.id;
-    // newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
-    // document.getElementById("groupSideList").appendChild(newGroupButton);
 }
 
 // On Leave group submit button pressed, read the name from the leave group form and try to find a group with the name out of the user's groups. leaves the first group with that name it finds.
@@ -98,8 +92,8 @@ function groupLeave() {
 
         if (found = false) {
             console.log("Group not found");
-        } 
-        
+        }
+
     });
 }
 
@@ -144,23 +138,13 @@ function groupJoin() {
             newGroupButton.setAttribute("class", "testbuttonclassname")
             newGroupButton.innerHTML = name;
             let groupid = currGroup.id;
-            newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+            newGroupButton.setAttribute('onclick', 'loadgroupEvents("' + groupid + '")');
             document.getElementById("groupSideList").appendChild(newGroupButton);
-
-
-            currGroup.get().then(group => {
-                console.log("devtool " + group.data().name);
-            });
 
         } else {
             console.log("empty return");
         }
 
-
-        // obtained.forEach(doc => {
-        //     console.log(doc.data().name);
-        // });
-        // currently this does not set the currGroup the same as the create group function. need to discuss if this method is better or not.
     });
 
 }
@@ -174,7 +158,6 @@ function devToolSetCurrGroup(groupName) {
             currGroup.get().then(function (obt) {
                 console.log("devtool set name " + obt.data().name);
                 console.log("devtool " + obt.data().members[0]);
-
             });
             console.log("devtool id " + currGroup.id);
             console.log("devtool type " + (typeof currGroup));
@@ -215,32 +198,34 @@ function loadGroupList() {
             }
 
             docRef.get().then((doc) => {
+                if (doc.data() != undefined) {
+                    let curGrouplist = doc.data().groups;
 
-                let curGrouplist = doc.data().groups;
-                
-                // let groupName = db.collection("groups").doc(curGrouplist[i]).name;
-                for (let i = 0; i < curGrouplist.length; i++) {
-                    groupRef = curGrouplist[i];
-                    groupRef.get().then(function(docg) {
-                        groupName = docg.data().name
-                        let newGroupButton = document.createElement("button");
-                        //newGroupButton.setAttribute("class", "testbuttonclassname");
-                        newGroupButton.setAttribute("class", "btn btn-light");
-                        newGroupButton.innerHTML = groupName;
-                        let groupid = docg.id;
-                        // newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
-                        newGroupButton.setAttribute('onclick', 'setCurrGroup("' + groupName + '")'); 
-                        document.getElementById("groupSideList").appendChild(newGroupButton);
-                        let newLine = document.createElement("p");
-                        document.getElementById("groupSideList").appendChild(newLine);
-                    })
-            }
+                    // let groupName = db.collection("groups").doc(curGrouplist[i]).name;
+                    for (let i = 0; i < curGrouplist.length; i++) {
+                        groupRef = curGrouplist[i];
+                        groupRef.get().then(function (docg) {
+                            groupName = docg.data().name
+                            let newGroupButton = document.createElement("button");
+                            //newGroupButton.setAttribute("class", "testbuttonclassname");
+                            newGroupButton.setAttribute("class", "btn btn-light");
+                            newGroupButton.innerHTML = groupName;
+                            let groupid = docg.id;
+                            // newGroupButton.setAttribute('onclick', 'loadgroupEvents("'+ groupid + '")');
+                            newGroupButton.setAttribute('onclick', 'setCurrGroup("' + groupName + '")');
+                            document.getElementById("groupSideList").appendChild(newGroupButton);
+                            let newLine = document.createElement("p");
+                            document.getElementById("groupSideList").appendChild(newLine);
+                        })
+                    }
+                }
             })
-        }})
+        }
+    })
 }
 
 // sets the currGroup to the first group with given name.
-function setCurrGroup(groupName){
+function setCurrGroup(groupName) {
     db.collection("groups").limit(1).where("name", "==", groupName).get().then(obtained => {
         if (!obtained.empty) {
             currGroup = obtained.docs[0].ref;
@@ -249,7 +234,7 @@ function setCurrGroup(groupName){
             createGroupCalendar(currGroup);
         } else {
             console.log("empty return");
-        }       
+        }
     });
 }
 
@@ -268,24 +253,24 @@ function devToolDisplayCurrUser() {
 
 // Creates group calendar out of the personal calendars of every member of given group.
 function createGroupCalendar(groupRef) {
-    console.log("called create group calendar");
+    // console.log("called create group calendar");
     groupRef.get()
         .then(function (groupDoc) {
             groupRef.collection("calendar").get().then(cal => {
-                    if (cal.docs.length > 0) {
-                        cal.docs.forEach((doc) => {
-                            groupRef.collection("calendar").doc(doc.id).delete();
-                        });
-                    }
+                if (cal.docs.length > 0) {
+                    cal.docs.forEach((doc) => {
+                        groupRef.collection("calendar").doc(doc.id).delete();
+                    });
+                }
 
-                    let memberList = groupDoc.data().members;
+                let memberList = groupDoc.data().members;
                 memberList.forEach(member => {
                     db.collection("users").doc(member).get().then(user => {
                         db.collection("users").doc(member).collection("calendar").get()
                             .then(events => {
                                 events.forEach(event => {
                                     db.collection("groups").doc(groupDoc.id).collection("calendar").add({
-                                        title: user.data().name,
+                                        //title: user.data().name,
                                         date: event.data().date,
                                         timeslot: event.data().timeslot
                                     });
@@ -296,35 +281,35 @@ function createGroupCalendar(groupRef) {
                 });
 
             });
-                
+
         });
 }
 
 // Removes the given group from the user's group list, and removes the user from the group's member list. If this user is the last user in the group, the group is deleted.
 function leaveGroup(groupRef) {
-        
-            groupRef.update({
-                members: firebase.firestore.FieldValue.arrayRemove(currentUser.id)
-            }).then(() => {
-                db.collection("users").doc(currentUser.id).update({    
-                    groups: firebase.firestore.FieldValue.arrayRemove(groupRef)
-                        
-                }).then(() => {
-                    loadGroupList();
-                });
 
-                groupRef.get()
-                    .then(function (groupDoc) {
-                        if (groupDoc.data().members.length <= 0) {
-                            groupRef.collection("calendar").get().then(cal => {
-                                cal.docs.forEach((doc) => {
-                                    groupRef.collection("calendar").doc(doc.id).delete();
-                                });
-                            });
-                            db.collection("groups").doc(groupRef.id).delete();
-                        }
-                    });  
-            })       
+    groupRef.update({
+        members: firebase.firestore.FieldValue.arrayRemove(currentUser.id)
+    }).then(() => {
+        db.collection("users").doc(currentUser.id).update({
+            groups: firebase.firestore.FieldValue.arrayRemove(groupRef)
+
+        }).then(() => {
+            loadGroupList();
+        });
+
+        groupRef.get()
+            .then(function (groupDoc) {
+                if (groupDoc.data().members.length <= 0) {
+                    groupRef.collection("calendar").get().then(cal => {
+                        cal.docs.forEach((doc) => {
+                            groupRef.collection("calendar").doc(doc.id).delete();
+                        });
+                    });
+                    db.collection("groups").doc(groupRef.id).delete();
+                }
+            });
+    })
 }
 
 

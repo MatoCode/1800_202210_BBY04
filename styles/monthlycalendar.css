@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Nastaliq+Urdu);
 
 body {
-    background-image: url("/images/try2.jpg");
+    background-image: url("/images/background.jpg");
 
 }
 
@@ -27,9 +27,6 @@ body {
     border-right: solid;
     border-color: #212529;
     border-width: 15px;
-    /* border-style: ; */
-    /* background-color: rgb(199, 184, 184); */
-    /* background-image: url("/images/try2.jpg"); */
   }
   #groupSideList{
     padding-top: 100px;
