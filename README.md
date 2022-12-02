@@ -58,7 +58,6 @@ Firebase hosting files:
 ├── firebaser.json
 ├── firebaser.indexes.json
 ├── firebaser.rules
-
 ```
 
 Tips for file naming files and folders:
